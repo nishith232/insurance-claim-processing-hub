@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_snc_insurance_0.ClaimCompletenessChecker</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>ClaimCompletenessChecker</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[var ClaimCompletenessChecker = Class.create();
+ClaimCompletenessChecker.prototype = {
+    initialize: function() {},
+
+    // Checks which mandatory documents are missing for a claim.
+    // Fills in the result fields on the claim but does NOT save it.
+    evaluate: function(claimGr) {
+        var missing = [];
+        var claimType = claimGr.getValue('claim_type');
+
+        if (!claimType) {
+            missing.push('Claim type not selected');
+        } else {
+            // Get the mandatory document rules for this claim type
+            var rule = new GlideRecord('x_snc_insurance_0_claim_type_document_rules');
+            rule.addQuery('claim_type', claimType);
+            rule.addQuery('is_mandatory', true);
+            rule.query();
+
+            while (rule.next()) {
+                // Is there an uploaded document of this type for this claim?
+                var doc = new GlideRecord('x_snc_insurance_0_document');
+                doc.addQuery('claim_id', claimGr.getUniqueValue());
+                doc.addQuery('document_type', rule.getValue('required_document_type'));
+                doc.addQuery('upload_status', 'uploaded');
+                doc.setLimit(1);
+                doc.query();
+
+                if (!doc.hasNext()) {
+                    // Use the readable label, e.g. "Police Report"
+                    var label = new GlideRecord('x_snc_insurance_0_document');
+                    label.setValue('document_type', rule.getValue('required_document_type'));
+                    missing.push(label.getDisplayValue('document_type'));
+                }
+            }
+        }
+
+        claimGr.setValue('documents_complete', missing.length === 0);
+        claimGr.setValue('missing_documents', missing.join(', '));
+
+        // NEW: also run the cross-document consistency check
+        this.checkConsistency(claimGr);
+        this._syncCase(claimGr);
+    },
+
+    // NEW: Compares the values written on each uploaded document against the claim.
+    // Fills in documents_consistent and consistency_issues but does NOT save.
+    checkConsistency: function(claimGr) {
+        var issues = [];
+        var claimDate = claimGr.getValue('date_of_incident'); // e.g. 2026-09-08
+        var claimAmount = parseFloat(claimGr.getValue('claim_amount_requested')) || 0;
+
+        // Documents that should show the same date as the incident
+        var mustMatchDate = ['claim_form', 'police_report', 'incident_report'];
+        // Bills: dated on or after the incident, and their amounts are added up
+        var mustBeAfterDate = ['repair_invoice', 'medical_report'];
+
+        var billTotal = 0;
+        var billDocs = [];
+
+        var doc = new GlideRecord('x_snc_insurance_0_document');
+        doc.addQuery('claim_id', claimGr.getUniqueValue());
+        doc.addQuery('upload_status', 'uploaded');
+        doc.query();
+
+        while (doc.next()) {
+            var type = doc.getValue('document_type');
+            var name = doc.getDisplayValue('document_type');
+            var docDate = doc.getValue('date_on_document');
+            var docAmount = doc.getValue('amount_on_document');
+
+            // 1. Date checks (only when both dates are filled in)
+            if (docDate && claimDate) {
+                if (mustMatchDate.indexOf(type) > -1 && docDate != claimDate) {
+                    issues.push('Date mismatch: ' + name + ' shows ' + docDate +
+                        ', but the claim says the incident was on ' + claimDate + '.');
+                }
+                if (mustBeAfterDate.indexOf(type) > -1 && docDate < claimDate) {
+                    issues.push('Date conflict: ' + name + ' is dated ' + docDate +
+                        ', which is before the incident date ' + claimDate + '.');
+                }
+            }
+
+            // 2. Add up bill amounts
+            if (docAmount && mustBeAfterDate.indexOf(type) > -1) {
+                billTotal += parseFloat(docAmount);
+                billDocs.push(name);
+            }
+        }
+
+        // 3. Amount check: claiming more than the bills show (5% tolerance)
+        if (billDocs.length > 0 && claimAmount > billTotal * 1.05) {
+            issues.push('Amount mismatch: the claim requests ' + claimAmount +
+                ', but ' + billDocs.join(' + ') + ' total only ' + billTotal + '.');
+        }
+
+        claimGr.setValue('documents_consistent', issues.length === 0);
+        claimGr.setValue('consistency_issues', issues.join('\n'));
+    },
+
+    // Posts an update on the linked CSM case when documents are missing or complete.
+    // Does nothing if the claim has no linked case yet.
+    _syncCase: function(claimGr) {
+        var caseId = claimGr.getValue('customer_case');
+        if (!caseId) return;
+
+        var caseGr = new GlideRecord('sn_customerservice_case');
+        if (!caseGr.get(caseId)) return;
+
+        var missing = claimGr.getValue('missing_documents');
+        missing = (missing || '').split(',').map(function(t) { return t.trim().replace(/_/g, ' ').replace(/\b\w/g, function(c) { return c.toUpperCase(); }).replace(/\bId\b/g, 'ID'); }).join(', ');
+        var note;
+
+        if (missing) {
+            note = 'We are missing the following document(s) for your claim: ' + missing +
+                '. Please upload them so we can continue processing your claim.';
+        } else {
+            note = 'All required documents have been received for your claim. It is now under review.';
+        }
+
+        // Only post if this exact message wasn't the last one posted (avoids repeat notes)
+        if (caseGr.getValue('x_snc_insurance_0_last_ai_note') != note) {
+            caseGr.comments = note; // customer-visible additional comment
+            caseGr.setValue('x_snc_insurance_0_last_ai_note', note);
+            caseGr.update();
+        }
+    },
+
+    // Re-checks a claim by its sys_id and saves the result.
+    // Used when a document is added, changed or deleted.
+    recheck: function(claimSysId) {
+        var claimGr = new GlideRecord('x_snc_insurance_0_claim');
+        if (claimGr.get(claimSysId)) {
+            this.evaluate(claimGr);
+            claimGr.update();
+        }
+    },
+
+    type: 'ClaimCompletenessChecker'
+};]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-24 05:47:07</sys_created_on>
+        <sys_id>93044bc590e303107f44b7be9ec885aa</sys_id>
+        <sys_mod_count>6</sys_mod_count>
+        <sys_name>ClaimCompletenessChecker</sys_name>
+        <sys_package display_value="Insurance Claim Processing Hub" source="x_snc_insurance_0">0d755344b9a303107f4438bce96291f7</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="Insurance Claim Processing Hub">0d755344b9a303107f4438bce96291f7</sys_scope>
+        <sys_update_name>sys_script_include_93044bc590e303107f44b7be9ec885aa</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-28 16:30:24</sys_updated_on>
+    </sys_script_include>
+</record_update>

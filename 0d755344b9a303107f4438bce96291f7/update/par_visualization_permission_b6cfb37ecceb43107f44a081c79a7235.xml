@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="par_visualization_permission">
+    <par_visualization_permission action="INSERT_OR_UPDATE">
+        <can_share>true</can_share>
+        <component display_value="Claims by Status">3ecfb37ecceb43107f44a081c79a722b</component>
+        <group/>
+        <owner>true</owner>
+        <role/>
+        <sys_class_name>par_visualization_permission</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-29 20:32:55</sys_created_on>
+        <sys_id>b6cfb37ecceb43107f44a081c79a7235</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>3ecfb37ecceb43107f44a081c79a722b</sys_name>
+        <sys_package display_value="Insurance Claim Processing Hub" source="x_snc_insurance_0">0d755344b9a303107f4438bce96291f7</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Insurance Claim Processing Hub">0d755344b9a303107f4438bce96291f7</sys_scope>
+        <sys_update_name>par_visualization_permission_b6cfb37ecceb43107f44a081c79a7235</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-29 20:32:55</sys_updated_on>
+        <user display_value="System Administrator">6816f79cc0a8016401c5a33be04be441</user>
+        <write>true</write>
+    </par_visualization_permission>
+</record_update>

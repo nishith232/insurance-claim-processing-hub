@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="question_choice">
+    <question_choice action="INSERT_OR_UPDATE">
+        <inactive>false</inactive>
+        <misc>0</misc>
+        <order>300</order>
+        <published_ref/>
+        <question display_value="Claim Type">fecbfc2064a303107f447239048e4ee2</question>
+        <rec_misc>0</rec_misc>
+        <sys_class_name>question_choice</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-22 07:03:56</sys_created_on>
+        <sys_id>5573416064e303107f447239048e4e79</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Property</sys_name>
+        <sys_package display_value="Insurance Claim Processing Hub" source="x_snc_insurance_0">0d755344b9a303107f4438bce96291f7</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Insurance Claim Processing Hub">0d755344b9a303107f4438bce96291f7</sys_scope>
+        <sys_update_name>question_choice_5573416064e303107f447239048e4e79</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-22 07:03:56</sys_updated_on>
+        <text>Property</text>
+        <value>property</value>
+    </question_choice>
+    <fx_price action="delete_multiple" query="id=5573416064e303107f447239048e4e79"/>
+    <fx_price action="INSERT_OR_UPDATE">
+        <amount>0</amount>
+        <currency display_value="USD">USD</currency>
+        <field>misc</field>
+        <id>5573416064e303107f447239048e4e79</id>
+        <parent/>
+        <reference_amount>0</reference_amount>
+        <reference_currency display_value="USD">USD</reference_currency>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-22 07:03:56</sys_created_on>
+        <sys_id>8483816064e303107f447239048e4efc</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-22 07:03:56</sys_updated_on>
+        <table>question_choice</table>
+        <type>calculated</type>
+    </fx_price>
+    <fx_price action="INSERT_OR_UPDATE">
+        <amount>0</amount>
+        <currency display_value="USD">USD</currency>
+        <field>rec_misc</field>
+        <id>5573416064e303107f447239048e4e79</id>
+        <parent/>
+        <reference_amount>0</reference_amount>
+        <reference_currency display_value="USD">USD</reference_currency>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-22 07:03:56</sys_created_on>
+        <sys_id>0c83816064e303107f447239048e4efb</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-22 07:03:56</sys_updated_on>
+        <table>question_choice</table>
+        <type>calculated</type>
+    </fx_price>
+</record_update>

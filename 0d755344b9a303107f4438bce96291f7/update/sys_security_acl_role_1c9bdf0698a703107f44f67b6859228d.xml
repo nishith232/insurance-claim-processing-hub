@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_security_acl_role">
+    <sys_security_acl_role action="INSERT_OR_UPDATE">
+        <sys_class_name>sys_security_acl_role</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-27 09:59:12</sys_created_on>
+        <sys_id>1c9bdf0698a703107f44f67b6859228d</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>x_snc_insurance_0_policy.snc_internal</sys_name>
+        <sys_package display_value="Insurance Claim Processing Hub" source="x_snc_insurance_0">0d755344b9a303107f4438bce96291f7</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Insurance Claim Processing Hub">0d755344b9a303107f4438bce96291f7</sys_scope>
+        <sys_security_acl display_value="x_snc_insurance_0_policy">c47c06a0646f03107f447239048e4e92</sys_security_acl>
+        <sys_update_name>sys_security_acl_role_1c9bdf0698a703107f44f67b6859228d</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-27 09:59:12</sys_updated_on>
+        <sys_user_role display_value="snc_internal" name="snc_internal">7fcaa702933002009c8579b4f47ffbde</sys_user_role>
+    </sys_security_acl_role>
+</record_update>

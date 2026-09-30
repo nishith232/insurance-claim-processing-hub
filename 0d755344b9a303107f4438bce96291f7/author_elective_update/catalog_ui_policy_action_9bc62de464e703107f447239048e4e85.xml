@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="catalog_ui_policy_action">
+    <catalog_ui_policy_action action="DELETE">
+        <catalog_item display_value="Submit a Claim">2515f8e0646303107f447239048e4ea3</catalog_item>
+        <catalog_variable>IO:7b6a4dac64e303107f447239048e4e9f</catalog_variable>
+        <cleared>false</cleared>
+        <disabled>ignore</disabled>
+        <field/>
+        <field_message/>
+        <field_message_type>none</field_message_type>
+        <mandatory>true</mandatory>
+        <order>400</order>
+        <sys_class_name>catalog_ui_policy_action</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-22 09:38:25</sys_created_on>
+        <sys_id>9bc62de464e703107f447239048e4e85</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>doc_id_proof</sys_name>
+        <sys_package display_value="Insurance Claim Processing Hub" source="x_snc_insurance_0">0d755344b9a303107f4438bce96291f7</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Insurance Claim Processing Hub">0d755344b9a303107f4438bce96291f7</sys_scope>
+        <sys_update_name>catalog_ui_policy_action_9bc62de464e703107f447239048e4e85</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-22 09:38:25</sys_updated_on>
+        <table/>
+        <ui_policy display_value="Show Travel document uploads">0fc5216464e703107f447239048e4efc</ui_policy>
+        <value/>
+        <value_action>ignore</value_action>
+        <variable>doc_id_proof</variable>
+        <variable_set/>
+        <visible>true</visible>
+    </catalog_ui_policy_action>
+    <sys_translated_text action="DELETE" query="documentkey=9bc62de464e703107f447239048e4e85"/>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="Insurance Claim Processing Hub">0d755344b9a303107f4438bce96291f7</application>
+        <file_path/>
+        <instance_id>8ad1cdc7c38fcf94a03197af05013156</instance_id>
+        <instance_name>ltm-hck-2876-0048</instance_name>
+        <name>catalog_ui_policy_action_9bc62de464e703107f447239048e4e85</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="catalog_ui_policy_action"><catalog_ui_policy_action action="INSERT_OR_UPDATE"><catalog_item display_value="Submit a Claim">2515f8e0646303107f447239048e4ea3</catalog_item><catalog_variable>IO:7b6a4dac64e303107f447239048e4e9f</catalog_variable><cleared>false</cleared><disabled>ignore</disabled><field/><field_message/><field_message_type>none</field_message_type><mandatory>true</mandatory><order>400</order><sys_class_name>catalog_ui_policy_action</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2026-09-22 09:38:25</sys_created_on><sys_id>9bc62de464e703107f447239048e4e85</sys_id><sys_mod_count>0</sys_mod_count><sys_name>doc_id_proof</sys_name><sys_package display_value="Insurance Claim Processing Hub" source="x_snc_insurance_0">0d755344b9a303107f4438bce96291f7</sys_package><sys_policy/><sys_scope display_value="Insurance Claim Processing Hub">0d755344b9a303107f4438bce96291f7</sys_scope><sys_update_name>catalog_ui_policy_action_9bc62de464e703107f447239048e4e85</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2026-09-22 09:38:25</sys_updated_on><table/><ui_policy display_value="Show Travel document uploads">0fc5216464e703107f447239048e4efc</ui_policy><value/><value_action>ignore</value_action><variable>doc_id_proof</variable><variable_set/><visible>true</visible></catalog_ui_policy_action><sys_translated_text action="delete_multiple" query="documentkey=9bc62de464e703107f447239048e4e85"/></record_update>]]></payload>
+        <payload_hash>-1349167210</payload_hash>
+        <record_name>doc_id_proof</record_name>
+        <reverted_from/>
+        <source>c9755344b9a303107f4438bce96291fa</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-22 09:38:25</sys_created_on>
+        <sys_id>83d6212864e703107f447239048e4e67</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>1a0c87b188a0000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-22 09:38:25</sys_updated_on>
+        <type>Catalog UI Policy Action</type>
+        <update_guid>47d6212843e703107a3121e4b9c85866</update_guid>
+        <update_guid_history>47d6212843e703107a3121e4b9c85866:-1349167210</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="doc_id_proof">d81c2d28642b03107f447239048e4e77</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-22 10:01:10</sys_created_on>
+        <sys_db_object display_value="" name="catalog_ui_policy_action">catalog_ui_policy_action</sys_db_object>
+        <sys_id>495eb902bf694c1a9beae56d754f4164</sys_id>
+        <sys_metadata>9bc62de464e703107f447239048e4e85</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>doc_id_proof</sys_name>
+        <sys_package display_value="Insurance Claim Processing Hub" source="x_snc_insurance_0">0d755344b9a303107f4438bce96291f7</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="Insurance Claim Processing Hub">0d755344b9a303107f4438bce96291f7</sys_scope>
+        <sys_scope_delete display_value="">05de2a3fa36e4a2b80f8ea5b119d12a9</sys_scope_delete>
+        <sys_update_name>catalog_ui_policy_action_9bc62de464e703107f447239048e4e85</sys_update_name>
+        <sys_update_version display_value="catalog_ui_policy_action_9bc62de464e703107f447239048e4e85">83d6212864e703107f447239048e4e67</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-22 10:01:10</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

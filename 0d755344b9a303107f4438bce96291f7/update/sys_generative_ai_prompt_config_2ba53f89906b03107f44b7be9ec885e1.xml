@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_generative_ai_prompt_config">
+    <sys_generative_ai_prompt_config action="INSERT_OR_UPDATE">
+        <ai_config display_value="OneExtend Capability Definition: Claim Adjuster Summary (Now LLM Service - Now LLM Generic)">97a53f89906b03107f44b7be9ec885de</ai_config>
+        <definition display_value="Claim Adjuster Summary (Now LLM Service - Now LLM Generic)">13a53f89906b03107f44b7be9ec885c1</definition>
+        <filter_properties>{}</filter_properties>
+        <filter_type>default</filter_type>
+        <is_default>false</is_default>
+        <order>0</order>
+        <sys_class_name>sys_generative_ai_prompt_config</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-24 09:19:22</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>2ba53f89906b03107f44b7be9ec885e1</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>97a53f89906b03107f44b7be9ec885de</sys_name>
+        <sys_package display_value="Insurance Claim Processing Hub" source="x_snc_insurance_0">0d755344b9a303107f4438bce96291f7</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Insurance Claim Processing Hub">0d755344b9a303107f4438bce96291f7</sys_scope>
+        <sys_update_name>sys_generative_ai_prompt_config_2ba53f89906b03107f44b7be9ec885e1</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-26 07:25:47</sys_updated_on>
+    </sys_generative_ai_prompt_config>
+</record_update>

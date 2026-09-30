@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_decision_multi_result">
+    <sys_decision_multi_result action="INSERT_OR_UPDATE">
+        <decision_table display_value="Fraud Risk Level Mapping">9a3a55f5642703107f44bdf7b262eaa7</decision_table>
+        <label>Fraud Risk Level: High, Recommended Action: Escalate for fraud investigation</label>
+        <result_elements/>
+        <sys_class_name>sys_decision_multi_result</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-26 06:07:38</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>2afcd1bd642703107f44bdf7b262ea84</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Fraud Risk Level: High, Recommended Action: Escalate for fraud investigation</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="Insurance Claim Processing Hub" source="x_snc_insurance_0">0d755344b9a303107f4438bce96291f7</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Insurance Claim Processing Hub">0d755344b9a303107f4438bce96291f7</sys_scope>
+        <sys_update_name>sys_decision_multi_result_2afcd1bd642703107f44bdf7b262ea84</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-26 06:07:38</sys_updated_on>
+    </sys_decision_multi_result>
+    <sys_variable_value action="delete_multiple" query="document_key=2afcd1bd642703107f44bdf7b262ea84"/>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>sys_decision_multi_result</document>
+        <document_key>2afcd1bd642703107f44bdf7b262ea84</document_key>
+        <order>100</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-26 06:07:38</sys_created_on>
+        <sys_id>eefcd1bd642703107f44bdf7b262ea84</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-26 06:07:38</sys_updated_on>
+        <value>High</value>
+        <variable display_value="Fraud Risk Level">cefcd1bd642703107f44bdf7b262ea2a</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>sys_decision_multi_result</document>
+        <document_key>2afcd1bd642703107f44bdf7b262ea84</document_key>
+        <order>200</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-26 06:07:38</sys_created_on>
+        <sys_id>26fcd1bd642703107f44bdf7b262ea85</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-26 06:07:38</sys_updated_on>
+        <value>Escalate for fraud investigation</value>
+        <variable display_value="Recommended Action">5efcd1bd642703107f44bdf7b262ea45</variable>
+    </sys_variable_value>
+</record_update>

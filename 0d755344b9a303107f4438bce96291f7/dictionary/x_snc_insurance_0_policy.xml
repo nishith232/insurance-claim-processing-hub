@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element attributes="enforce_dot_walk_cross_scope_access=true" db_object_id="2a5c42a0646f03107f447239048e4eab" label="Policy" max_length="40" name="x_snc_insurance_0_policy" type="collection">
+        <element choice="1" label="Manager Signoff Status" max_length="40" name="manager_signoff_status" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Pending" sequence="1" value="pending"/>
+                <element inactive_on_update="false" label="Approved" sequence="2" value="approved"/>
+                <element inactive_on_update="false" label="Declined" sequence="3" value="declined"/>
+                <element inactive_on_update="false" label="Not Required" sequence="0" value="not_required"/>
+            </choice>
+        </element>
+        <element label="Manager Notes" max_length="2000" name="manager_notes" type="string"/>
+        <element display="true" label="Policy Number" max_length="40" name="policy_number" type="string"/>
+        <element label="Contact Phone" max_length="40" name="contact_phone" type="string"/>
+        <element label="Premium Amount" max_length="20" name="premium_amount" type="currency"/>
+        <element label="Policy Owner" max_length="32" name="policy_owner" reference="sys_user" type="reference"/>
+        <element label="Coverage Limit" max_length="20" name="coverage_limit" type="currency"/>
+        <element label="Policyholder Name" max_length="100" name="policyholder_name" type="string"/>
+        <element label="Contact Email" max_length="40" name="contact_email" type="string"/>
+        <element label="Policy Start Date" max_length="255" name="policy_start_date" type="glide_date"/>
+        <element label="Manager Signoff By" max_length="32" name="manager_signoff_by" reference="sys_user" type="reference"/>
+        <element label="Policy Status" max_length="255" name="policy_status" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Expired" sequence="1" value="expired"/>
+                <element inactive_on_update="false" label="Cancelled" sequence="2" value="cancelled"/>
+                <element inactive_on_update="false" label="Active" sequence="0" value="active"/>
+            </choice>
+        </element>
+        <index name="index" unique="true">
+            <element name="policy_number"/>
+        </index>
+        <index name="index2">
+            <element name="policy_owner"/>
+        </index>
+        <index name="index3">
+            <element name="manager_signoff_by"/>
+        </index>
+    </element>
+</database>

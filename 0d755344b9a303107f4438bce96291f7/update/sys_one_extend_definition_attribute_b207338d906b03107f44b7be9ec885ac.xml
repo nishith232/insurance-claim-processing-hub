@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_one_extend_definition_attribute">
+    <sys_one_extend_definition_attribute action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <advanced>false</advanced>
+        <apply_filter>false</apply_filter>
+        <attribute_label/>
+        <capability display_value="Claim Adjuster Summary">c7a53f89906b03107f44b7be9ec8858d</capability>
+        <choice_list/>
+        <contains_large_input>false</contains_large_input>
+        <data_type>glide_record</data_type>
+        <default_value>CLM0001018</default_value>
+        <definition/>
+        <description>The insurance claim record the adjuster is reviewing</description>
+        <group/>
+        <hidden>false</hidden>
+        <info/>
+        <label>claim</label>
+        <mandatory>true</mandatory>
+        <name>claim</name>
+        <order>100</order>
+        <schema>{"tableName":"x_snc_insurance_0_claim","sysId":"882ef68990a303107f44b7be9ec88591"}</schema>
+        <sys_class_name>sys_one_extend_definition_attribute</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-24 09:25:20</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>b207338d906b03107f44b7be9ec885ac</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>claim</sys_name>
+        <sys_package display_value="Insurance Claim Processing Hub" source="x_snc_insurance_0">0d755344b9a303107f4438bce96291f7</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Insurance Claim Processing Hub">0d755344b9a303107f4438bce96291f7</sys_scope>
+        <sys_update_name>sys_one_extend_definition_attribute_b207338d906b03107f44b7be9ec885ac</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-24 09:25:20</sys_updated_on>
+        <translate>false</translate>
+        <truncate>false</truncate>
+        <type>input</type>
+        <user_query>false</user_query>
+    </sys_one_extend_definition_attribute>
+    <sys_translated_text action="delete_multiple" query="documentkey=b207338d906b03107f44b7be9ec885ac"/>
+</record_update>

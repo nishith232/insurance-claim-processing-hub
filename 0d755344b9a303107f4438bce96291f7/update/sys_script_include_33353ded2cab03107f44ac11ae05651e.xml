@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_snc_insurance_0.FraudRiskScorer</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>FraudRiskScorer</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[var FraudRiskScorer = Class.create();
+FraudRiskScorer.prototype = {
+    initialize: function() {},
+
+    // Scores a claim's fraud risk. Fills in the result fields but does NOT save.
+    // claimGr: the Claim GlideRecord (already loaded, with its current field values)
+    evaluate: function(claimGr) {
+        var reasons = [];
+        var score = 0;
+
+        // 1. Documents inconsistent (Phase 2 rule check: dates/amounts)
+        if (!claimGr.getValue('documents_consistent').toString().match(/^(true|1)$/i)) {
+            score += 20;
+            reasons.push('+20 Document consistency issue: ' +
+                (claimGr.getValue('consistency_issues') || 'see Consistency Issues'));
+        }
+
+        // 2. AI cross-check found a mismatch (name/age/vehicle/time)
+        var findings = claimGr.getValue('ai_document_findings') || '';
+        if (findings.indexOf('MISMATCHES:') > -1 && findings.indexOf('None found.') == -1) {
+            score += 20;
+            reasons.push('+20 AI found mismatches across documents (see AI Document Findings)');
+        }
+
+        // 3 & 5. Policy checks: coverage limit and recent activation
+        var policy = this._getPolicy(claimGr);
+        if (policy) {
+            var claimAmount = parseFloat(claimGr.getValue('claim_amount_requested')) || 0;
+            var coverageLimit = parseFloat(policy.getValue('coverage_limit')) || 0;
+
+            if (coverageLimit > 0 && claimAmount >= coverageLimit * 0.9) {
+                score += 15;
+                reasons.push('+15 Claim amount is close to or above the policy coverage limit');
+            }
+
+            var policyStart = policy.getValue('policy_start_date');
+            var incidentDate = claimGr.getValue('date_of_incident');
+            if (policyStart && incidentDate) {
+                var daysBetween = this._daysBetween(policyStart, incidentDate);
+                if (daysBetween !== null && daysBetween >= 0 && daysBetween < 30) {
+                    score += 20;
+                    reasons.push('+20 Policy started only ' + daysBetween + ' day(s) before the incident');
+                }
+            }
+
+            if (policy.getValue('policy_status') != 'active') {
+                score += 25;
+                reasons.push('+25 Policy was not active (status: ' + policy.getDisplayValue('policy_status') + ')');
+            }
+        } else {
+            reasons.push('Policy record not found or not linked - some checks skipped');
+        }
+
+        // 6. Amount vs similar historical claims
+        var histCheck = this._checkAgainstHistory(claimGr);
+        if (histCheck.flagged) {
+            score += 17;
+            reasons.push('+17 ' + histCheck.reason);
+        }
+
+        // 7. Missing mandatory documents
+        if (!claimGr.getValue('documents_complete').toString().match(/^(true|1)$/i)) {
+            score += 10;
+            reasons.push('+10 Required documents still missing at time of scoring');
+        }
+
+        if (reasons.length === 0) {
+            reasons.push('No risk indicators found');
+        }
+
+        // Level and recommended action come from the published Decision Table
+        // "Fraud Risk Level Mapping" (falls back to hardcoded logic only if that call fails).
+        var finalScore = Math.min(score, 100);
+        var level, action;
+
+        try {
+            var dt = new sn_dt.DecisionTableAPI();
+            var response = dt.getDecision('9a3a55f5642703107f44bdf7b262eaa7', { u_fraud_risk_score: finalScore });
+            level = response.result_elements.u_fraud_risk_level;
+            action = response.result_elements.u_recommended_action;
+        } catch (e) {
+            gs.warn('Decision Table call failed, using fallback logic: ' + e);
+        }
+
+        if (!level) {
+            // Fallback, only used if the Decision Table is unavailable
+            level = finalScore >= 61 ? 'High' : (finalScore >= 31 ? 'Medium' : 'Low');
+            action = level == 'High' ? 'Escalate for fraud investigation' :
+                     level == 'Medium' ? 'Manager review recommended' : 'Standard review';
+        }
+
+        reasons.push('Recommended action: ' + action);
+
+        claimGr.setValue('fraud_risk_score', finalScore);
+        claimGr.setValue('fraud_risk_level', level);
+        claimGr.setValue('fraud_risk_reasons', reasons.join('\n'));
+    },
+
+    // Looks up the Policy record linked to this claim's Policy Number
+    _getPolicy: function(claimGr) {
+        var policyNumber = claimGr.getDisplayValue('policy_number');
+        if (!policyNumber) return null;
+
+        var policy = new GlideRecord('x_snc_insurance_0_policy');
+        policy.addQuery('policy_number', policyNumber);
+        policy.setLimit(1);
+        policy.query();
+        return policy.next() ? policy : null;
+    },
+
+    // Whole days between two yyyy-mm-dd date strings
+    _daysBetween: function(dateStr1, dateStr2) {
+        var d1 = new Date(dateStr1);
+        var d2 = new Date(dateStr2);
+        if (isNaN(d1.getTime()) || isNaN(d2.getTime())) return null;
+        return Math.round((d2 - d1) / (1000 * 60 * 60 * 24));
+    },
+
+    // Compares this claim's amount against similar historical claims of the same type.
+    _checkAgainstHistory: function(claimGr) {
+        var claimType = claimGr.getValue('claim_type');
+        var claimAmount = parseFloat(claimGr.getValue('claim_amount_requested')) || 0;
+        if (!claimType || claimAmount <= 0) {
+            return { flagged: false, reason: '' };
+        }
+
+        var hist = new GlideRecord('x_snc_insurance_0_historical_claim');
+        hist.addQuery('claim_type', claimType);
+        hist.query();
+
+        var total = 0, count = 0;
+        while (hist.next()) {
+            total += parseFloat(hist.getValue('amount_claimed')) || 0;
+            count++;
+        }
+
+        if (count === 0) {
+            return { flagged: false, reason: '' };
+        }
+
+        var average = total / count;
+        if (claimAmount > average * 1.4) {
+            var pctAbove = Math.round(((claimAmount / average) - 1) * 100);
+            return {
+                flagged: true,
+                reason: 'Claim amount requested is ' + pctAbove + '% above the average for similar ' +
+                    claimType + ' claims (avg: ' + Math.round(average) + ')'
+            };
+        }
+
+        return { flagged: false, reason: '' };
+    },
+
+    // Re-scores a claim by its sys_id and saves the result.
+    rescore: function(claimSysId) {
+        var claimGr = new GlideRecord('x_snc_insurance_0_claim');
+        if (claimGr.get(claimSysId)) {
+            this.evaluate(claimGr);
+            claimGr.update();
+        }
+    },
+
+    type: 'FraudRiskScorer'
+};]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-25 13:16:08</sys_created_on>
+        <sys_id>33353ded2cab03107f44ac11ae05651e</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_name>FraudRiskScorer</sys_name>
+        <sys_package display_value="Insurance Claim Processing Hub" source="x_snc_insurance_0">0d755344b9a303107f4438bce96291f7</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="Insurance Claim Processing Hub">0d755344b9a303107f4438bce96291f7</sys_scope>
+        <sys_update_name>sys_script_include_33353ded2cab03107f44ac11ae05651e</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-26 07:17:02</sys_updated_on>
+    </sys_script_include>
+</record_update>

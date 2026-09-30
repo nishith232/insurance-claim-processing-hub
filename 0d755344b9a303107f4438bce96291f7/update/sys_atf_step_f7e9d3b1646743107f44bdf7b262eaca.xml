@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_atf_step">
+    <sys_atf_step action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <callable_outputs/>
+        <copied_from/>
+        <description>Run Server Side Validation Script</description>
+        <display_name>Run Server Side Script</display_name>
+        <inputs/>
+        <mugshots_cache_json/>
+        <notes/>
+        <order>1</order>
+        <step_config display_value="Run Server Side Script">41de4a935332120028bc29cac2dc349a</step_config>
+        <sys_class_name>sys_atf_step</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-26 15:15:01</sys_created_on>
+        <sys_id>f7e9d3b1646743107f44bdf7b262eaca</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>Run Server Side Script</sys_name>
+        <sys_package display_value="Insurance Claim Processing Hub" source="x_snc_insurance_0">0d755344b9a303107f4438bce96291f7</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Insurance Claim Processing Hub">0d755344b9a303107f4438bce96291f7</sys_scope>
+        <sys_update_name>sys_atf_step_f7e9d3b1646743107f44bdf7b262eaca</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-26 15:25:57</sys_updated_on>
+        <table/>
+        <test display_value="Fraud Risk Scoring - Motor claim with known issues">9d25d2fd642f03107f44bdf7b262ea64</test>
+        <timeout/>
+        <warning_message/>
+    </sys_atf_step>
+    <sys_variable_value action="delete_multiple" query="document_key=f7e9d3b1646743107f44bdf7b262eaca"/>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>sys_atf_step</document>
+        <document_key>f7e9d3b1646743107f44bdf7b262eaca</document_key>
+        <order>100</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-26 15:15:02</sys_created_on>
+        <sys_id>784ad7b1646743107f44bdf7b262eab2</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-26 15:15:02</sys_updated_on>
+        <value>3.1</value>
+        <variable display_value="Jasmine version">42f2564b73031300440211d8faf6a777</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>sys_atf_step</document>
+        <document_key>f7e9d3b1646743107f44bdf7b262eaca</document_key>
+        <order>200</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-26 15:15:02</sys_created_on>
+        <sys_id>384ad7b1646743107f44bdf7b262eab3</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-26 15:25:57</sys_updated_on>
+        <value>// Build an in-memory test claim, matching CLM0001030's known scenario&#13;
+var claim = new GlideRecord('x_snc_insurance_0_claim');&#13;
+claim.initialize();&#13;
+claim.setValue('claim_type', 'motor');&#13;
+claim.setValue('claim_amount_requested', 76000);&#13;
+claim.setValue('date_of_incident', '2026-09-08');&#13;
+claim.setValue('policy_number', 'POL-1001');&#13;
+claim.setValue('documents_consistent', false);&#13;
+claim.setValue('consistency_issues', 'Date mismatch: police_report shows 2026-09-10, but the claim says the incident was on 2026-09-08.\nAmount mismatch: the claim requests 76000, but repair_invoice total only 50000.');&#13;
+claim.setValue('ai_document_findings', 'MISMATCHES:\n- Vehicle registration mismatch\nMISSING OR BLANK:\n- FIR / Report No.');&#13;
+claim.setValue('documents_complete', true);&#13;
+&#13;
+new FraudRiskScorer().evaluate(claim);&#13;
+&#13;
+var actualScore = claim.getValue('fraud_risk_score');&#13;
+var actualLevel = claim.getValue('fraud_risk_level');&#13;
+&#13;
+// Assertion, right here in the same script&#13;
+if (actualScore != 40) {&#13;
+    throw new Error('Expected fraud_score 40, got ' + actualScore);&#13;
+}&#13;
+if (actualLevel != 'Medium') {&#13;
+    throw new Error('Expected fraud_level Medium, got ' + actualLevel);&#13;
+}&#13;
+&#13;
+gs.info('PASS: Fraud score = ' + actualScore + ', Level = ' + actualLevel);</value>
+        <variable display_value="Test script">989d9e235324220002c6435723dc3484</variable>
+    </sys_variable_value>
+</record_update>

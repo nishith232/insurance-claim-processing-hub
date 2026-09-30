@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_snc_insurance_0.SettlementRecommender</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>SettlementRecommender</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[var SettlementRecommender = Class.create();
+SettlementRecommender.prototype = {
+    initialize: function() {},
+
+    // Calculates a settlement range for a claim, based on similar historical claims.
+    // Fills in the result fields but does NOT save.
+    evaluate: function(claimGr) {
+        var claimType = claimGr.getValue('claim_type');
+        var claimAmount = parseFloat(claimGr.getValue('claim_amount_requested')) || 0;
+
+        if (!claimType || claimAmount <= 0) {
+            claimGr.setValue('settlement_recommendation', 'Not enough data to recommend a range');
+            claimGr.setValue('settlement_reference_claims', '');
+            return;
+        }
+
+        // 1. Gather all historical claims of the same type
+        var candidates = [];
+        var hist = new GlideRecord('x_snc_insurance_0_historical_claim');
+        hist.addQuery('claim_type', claimType);
+        hist.query();
+
+        while (hist.next()) {
+            var claimed = parseFloat(hist.getValue('amount_claimed')) || 0;
+            var settled = parseFloat(hist.getValue('amount_settled')) || 0;
+            if (claimed > 0) {
+                candidates.push({
+                    ref: hist.getValue('claim_reference'),
+                    claimed: claimed,
+                    settled: settled,
+                    diff: Math.abs(claimed - claimAmount)
+                });
+            }
+        }
+
+        if (candidates.length === 0) {
+            claimGr.setValue('settlement_recommendation', 'No similar historical claims found');
+            claimGr.setValue('settlement_reference_claims', '');
+            return;
+        }
+
+        // 2. Pick the 3 closest by claimed amount
+        candidates.sort(function(a, b) { return a.diff - b.diff; });
+        var closest = candidates.slice(0, Math.min(3, candidates.length));
+
+        // 3. Average settlement ratio among those closest matches
+        var totalRatio = 0;
+        var refList = [];
+        for (var i = 0; i < closest.length; i++) {
+            totalRatio += closest[i].settled / closest[i].claimed;
+            refList.push(closest[i].ref);
+        }
+        var avgRatio = totalRatio / closest.length;
+
+        // 4. Suggest a range: a few percent either side of the average ratio applied to this claim
+        var midpoint = claimAmount * avgRatio;
+        var low = Math.round(midpoint * 0.95 / 1000) * 1000;
+        var high = Math.round(midpoint * 1.05 / 1000) * 1000;
+
+        claimGr.setValue('settlement_recommendation',
+            'Rs. ' + low.toLocaleString('en-IN') + ' - Rs. ' + high.toLocaleString('en-IN'));
+        claimGr.setValue('settlement_reference_claims',
+            'Based on ' + closest.length + ' similar claim(s): ' + refList.join(', '));
+    },
+
+    // Re-calculates a claim's settlement recommendation by its sys_id and saves it.
+    recalculate: function(claimSysId) {
+        var claimGr = new GlideRecord('x_snc_insurance_0_claim');
+        if (claimGr.get(claimSysId)) {
+            this.evaluate(claimGr);
+            claimGr.update();
+        }
+    },
+
+    type: 'SettlementRecommender'
+};]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-26 05:14:24</sys_created_on>
+        <sys_id>7fa01d7564e303107f44bdf7b262ea74</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>SettlementRecommender</sys_name>
+        <sys_package display_value="Insurance Claim Processing Hub" source="x_snc_insurance_0">0d755344b9a303107f4438bce96291f7</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="Insurance Claim Processing Hub">0d755344b9a303107f4438bce96291f7</sys_scope>
+        <sys_update_name>sys_script_include_7fa01d7564e303107f44bdf7b262ea74</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-26 05:14:24</sys_updated_on>
+    </sys_script_include>
+</record_update>

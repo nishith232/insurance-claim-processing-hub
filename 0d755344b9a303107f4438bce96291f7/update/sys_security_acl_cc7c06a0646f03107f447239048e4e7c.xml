@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_security_acl">
+    <sys_security_acl action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <admin_overrides>true</admin_overrides>
+        <advanced>true</advanced>
+        <applies_to/>
+        <condition/>
+        <controlled_by_refs/>
+        <decision_type>allow</decision_type>
+        <description>Allow read for records in x_snc_insurance_0_policy, for users with role snc_external, and if the ACL script returns true.</description>
+        <local_or_existing>Existing</local_or_existing>
+        <name>x_snc_insurance_0_policy</name>
+        <operation display_value="read">read</operation>
+        <script><![CDATA[answer = gs.hasRole('admin') || gs.hasRole('x_snc_insurance_0.policy_user') ||
+         current.policy_owner.toString() == gs.getUserID();]]></script>
+        <security_attribute/>
+        <sys_class_name>sys_security_acl</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-22 12:22:36</sys_created_on>
+        <sys_id>cc7c06a0646f03107f447239048e4e7c</sys_id>
+        <sys_mod_count>15</sys_mod_count>
+        <sys_name>x_snc_insurance_0_policy</sys_name>
+        <sys_package display_value="Insurance Claim Processing Hub" source="x_snc_insurance_0">0d755344b9a303107f4438bce96291f7</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Insurance Claim Processing Hub">0d755344b9a303107f4438bce96291f7</sys_scope>
+        <sys_update_name>sys_security_acl_cc7c06a0646f03107f447239048e4e7c</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-29 09:51:51</sys_updated_on>
+        <type display_value="record">record</type>
+    </sys_security_acl>
+</record_update>

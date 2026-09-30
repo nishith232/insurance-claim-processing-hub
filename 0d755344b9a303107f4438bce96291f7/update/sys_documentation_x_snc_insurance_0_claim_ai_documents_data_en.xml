@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_documentation element="ai_documents_data" label="AI Documents Data" language="en" table="x_snc_insurance_0_claim">
+        <sys_documentation action="INSERT_OR_UPDATE">
+            <element>ai_documents_data</element>
+            <help/>
+            <hint/>
+            <label>AI Documents Data</label>
+            <language>en</language>
+            <name>x_snc_insurance_0_claim</name>
+            <plural>AI Documents Data</plural>
+            <sys_class_name>sys_documentation</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-09-24 13:38:34</sys_created_on>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>AI Documents Data</sys_name>
+            <sys_package display_value="Insurance Claim Processing Hub" source="x_snc_insurance_0">0d755344b9a303107f4438bce96291f7</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="Insurance Claim Processing Hub">0d755344b9a303107f4438bce96291f7</sys_scope>
+            <sys_update_name>sys_documentation_x_snc_insurance_0_claim_ai_documents_data_en</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-09-24 13:38:34</sys_updated_on>
+            <url/>
+            <url_target/>
+        </sys_documentation>
+    </sys_documentation>
+</record_update>

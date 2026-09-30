@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_atf_step">
+    <sys_atf_step action="DELETE">
+        <active>true</active>
+        <callable_outputs/>
+        <copied_from/>
+        <description>Run Server Side Validation Script</description>
+        <display_name>Run Server Side Script</display_name>
+        <inputs/>
+        <mugshots_cache_json/>
+        <notes/>
+        <order>2</order>
+        <step_config display_value="Run Server Side Script">41de4a935332120028bc29cac2dc349a</step_config>
+        <sys_class_name>sys_atf_step</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-26 15:16:29</sys_created_on>
+        <sys_id>fc7a9fb1646743107f44bdf7b262ea4c</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Run Server Side Script</sys_name>
+        <sys_package display_value="Insurance Claim Processing Hub" source="x_snc_insurance_0">0d755344b9a303107f4438bce96291f7</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Insurance Claim Processing Hub">0d755344b9a303107f4438bce96291f7</sys_scope>
+        <sys_update_name>sys_atf_step_fc7a9fb1646743107f44bdf7b262ea4c</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-26 15:16:29</sys_updated_on>
+        <table/>
+        <test display_value="Fraud Risk Scoring - Motor claim with known issues">9d25d2fd642f03107f44bdf7b262ea64</test>
+        <timeout/>
+        <warning_message/>
+    </sys_atf_step>
+    <sys_variable_value action="DELETE" query="document_key=fc7a9fb1646743107f44bdf7b262ea4c"/>
+    <sys_variable_value action="DELETE">
+        <document>sys_atf_step</document>
+        <document_key>fc7a9fb1646743107f44bdf7b262ea4c</document_key>
+        <order>100</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-26 15:16:29</sys_created_on>
+        <sys_id>029ad7f1646743107f44bdf7b262ea03</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-26 15:16:29</sys_updated_on>
+        <value>3.1</value>
+        <variable display_value="Jasmine version">42f2564b73031300440211d8faf6a777</variable>
+    </sys_variable_value>
+    <sys_variable_value action="DELETE">
+        <document>sys_atf_step</document>
+        <document_key>fc7a9fb1646743107f44bdf7b262ea4c</document_key>
+        <order>200</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-26 15:16:29</sys_created_on>
+        <sys_id>469ad7f1646743107f44bdf7b262ea03</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-26 15:16:29</sys_updated_on>
+        <value>if (outputs.fraud_score != 40) {&#13;
+    throw new Error('Expected fraud_score 40, got ' + outputs.fraud_score);&#13;
+}&#13;
+if (outputs.fraud_level != 'Medium') {&#13;
+    throw new Error('Expected fraud_level Medium, got ' + outputs.fraud_level);&#13;
+}&#13;
+gs.info('PASS: Fraud score and level correct');</value>
+        <variable display_value="Test script">989d9e235324220002c6435723dc3484</variable>
+    </sys_variable_value>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="Insurance Claim Processing Hub">0d755344b9a303107f4438bce96291f7</application>
+        <file_path/>
+        <instance_id>8ad1cdc7c38fcf94a03197af05013156</instance_id>
+        <instance_name>ltm-hck-2876-0048</instance_name>
+        <name>sys_atf_step_fc7a9fb1646743107f44bdf7b262ea4c</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_atf_step"><sys_atf_step action="INSERT_OR_UPDATE"><active>true</active><callable_outputs/><copied_from/><description>Run Server Side Validation Script</description><display_name>Run Server Side Script</display_name><inputs/><mugshots_cache_json/><notes/><order>2</order><step_config display_value="Run Server Side Script">41de4a935332120028bc29cac2dc349a</step_config><sys_class_name>sys_atf_step</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2026-09-26 15:16:29</sys_created_on><sys_id>fc7a9fb1646743107f44bdf7b262ea4c</sys_id><sys_mod_count>0</sys_mod_count><sys_name>Run Server Side Script</sys_name><sys_package display_value="Insurance Claim Processing Hub" source="x_snc_insurance_0">0d755344b9a303107f4438bce96291f7</sys_package><sys_policy/><sys_scope display_value="Insurance Claim Processing Hub">0d755344b9a303107f4438bce96291f7</sys_scope><sys_update_name>sys_atf_step_fc7a9fb1646743107f44bdf7b262ea4c</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2026-09-26 15:16:29</sys_updated_on><table/><test display_value="Fraud Risk Scoring - Motor claim with known issues">9d25d2fd642f03107f44bdf7b262ea64</test><timeout/><warning_message/></sys_atf_step><sys_variable_value action="delete_multiple" query="document_key=fc7a9fb1646743107f44bdf7b262ea4c"/><sys_variable_value action="INSERT_OR_UPDATE"><document>sys_atf_step</document><document_key>fc7a9fb1646743107f44bdf7b262ea4c</document_key><order>100</order><sys_class_name>sys_variable_value</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2026-09-26 15:16:29</sys_created_on><sys_id>029ad7f1646743107f44bdf7b262ea03</sys_id><sys_mod_count>0</sys_mod_count><sys_updated_by>admin</sys_updated_by><sys_updated_on>2026-09-26 15:16:29</sys_updated_on><value>3.1</value><variable display_value="Jasmine version">42f2564b73031300440211d8faf6a777</variable></sys_variable_value><sys_variable_value action="INSERT_OR_UPDATE"><document>sys_atf_step</document><document_key>fc7a9fb1646743107f44bdf7b262ea4c</document_key><order>200</order><sys_class_name>sys_variable_value</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2026-09-26 15:16:29</sys_created_on><sys_id>469ad7f1646743107f44bdf7b262ea03</sys_id><sys_mod_count>0</sys_mod_count><sys_updated_by>admin</sys_updated_by><sys_updated_on>2026-09-26 15:16:29</sys_updated_on><value>if (outputs.fraud_score != 40) {&#13;
+    throw new Error('Expected fraud_score 40, got ' + outputs.fraud_score);&#13;
+}&#13;
+if (outputs.fraud_level != 'Medium') {&#13;
+    throw new Error('Expected fraud_level Medium, got ' + outputs.fraud_level);&#13;
+}&#13;
+gs.info('PASS: Fraud score and level correct');</value><variable display_value="Test script">989d9e235324220002c6435723dc3484</variable></sys_variable_value></record_update>]]></payload>
+        <payload_hash>1877695445</payload_hash>
+        <record_name>Run Server Side Script</record_name>
+        <reverted_from/>
+        <source>c9755344b9a303107f4438bce96291fa</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-26 15:16:29</sys_created_on>
+        <sys_id>469ad7f1646743107f44bdf7b262ea06</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>1a0de4a0a4e0000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-26 15:16:29</sys_updated_on>
+        <type>Test Step</type>
+        <update_guid>469ad7f1986743102eb1b1ca1be2d805</update_guid>
+        <update_guid_history>469ad7f1986743102eb1b1ca1be2d805:1877695445</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete/>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-26 15:28:47</sys_created_on>
+        <sys_db_object display_value="" name="sys_atf_step">sys_atf_step</sys_db_object>
+        <sys_id>02bf3f95e20148a6bb41c683c8d38751</sys_id>
+        <sys_metadata>fc7a9fb1646743107f44bdf7b262ea4c</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Run Server Side Script</sys_name>
+        <sys_package display_value="Insurance Claim Processing Hub" source="x_snc_insurance_0">0d755344b9a303107f4438bce96291f7</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="Insurance Claim Processing Hub">0d755344b9a303107f4438bce96291f7</sys_scope>
+        <sys_scope_delete display_value="">05de2a3fa36e4a2b80f8ea5b119d12a9</sys_scope_delete>
+        <sys_update_name>sys_atf_step_fc7a9fb1646743107f44bdf7b262ea4c</sys_update_name>
+        <sys_update_version display_value="sys_atf_step_fc7a9fb1646743107f44bdf7b262ea4c">469ad7f1646743107f44bdf7b262ea06</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-26 15:28:47</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_one_extend_eval_strategy">
+    <sys_one_extend_eval_strategy action="INSERT_OR_UPDATE">
+        <capability display_value="Claim Document Cross Check">7d59ec5d902343107f44b7be9ec885fd</capability>
+        <default>true</default>
+        <name>Default</name>
+        <skill_config_id>0a59209d902343107f44b7be9ec88563</skill_config_id>
+        <sys_class_name>sys_one_extend_eval_strategy</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-24 13:05:06</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>1659209d902343107f44b7be9ec885c2</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Default</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="Insurance Claim Processing Hub" source="x_snc_insurance_0">0d755344b9a303107f4438bce96291f7</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Insurance Claim Processing Hub">0d755344b9a303107f4438bce96291f7</sys_scope>
+        <sys_update_name>sys_one_extend_eval_strategy_1659209d902343107f44b7be9ec885c2</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-24 13:05:06</sys_updated_on>
+    </sys_one_extend_eval_strategy>
+</record_update>

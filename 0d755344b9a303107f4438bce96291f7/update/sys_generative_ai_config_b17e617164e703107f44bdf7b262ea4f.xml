@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_generative_ai_config">
+    <sys_generative_ai_config action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <additional_configurations>{"skill_config_id":"e3a57f89906b03107f44b7be9ec8850a"}</additional_configurations>
+        <ai_suggested>false</ai_suggested>
+        <definition>13a53f89906b03107f44b7be9ec885c1</definition>
+        <definition_table>sys_one_extend_capability_definition</definition_table>
+        <documentation/>
+        <max_tokens>500</max_tokens>
+        <min_word_count>-1</min_word_count>
+        <model>llm_generic_small</model>
+        <name>Incident Summarization</name>
+        <parent/>
+        <prompt>You are an assistant helping an insurance claims adjuster review a claim.
+Write a plain-English summary of 5 to 8 sentences.
+
+Rules:
+- Use only the facts given below. Do not invent any details.
+- Do not approve, reject or decide the claim, and do not call it fraud.
+- If documents are missing, name them.
+- If there are consistency issues, explain each one simply.
+- Mention the fraud risk level and score, and briefly explain why (from the reasons given).
+- Mention the settlement recommendation and which past claims it's based on.
+- Never say the claim is approved, rejected, or confirmed fraudulent. The fraud risk level is a signal for review, not a verdict.
+- End with one recommended next step for the adjuster.
+- Start directly with the summary. Do not add a heading or introduction.
+
+Claim details:
+Claim number: {{claim.number}}
+Claim type: {{claim.claim_type}}
+Status: {{claim.claim_status}}
+Date of incident: {{claim.date_of_incident}}
+Date of submission: {{claim.date_of_submission}}
+Amount requested (INR): {{claim.claim_amount_requested}}
+Description: {{claim.short_description}}
+All required documents uploaded: {{claim.documents_complete}}
+Missing documents: {{claim.missing_documents}}
+Documents consistent with each other: {{claim.documents_consistent}}
+Consistency issues: {{claim.consistency_issues}}
+Fraud risk score (0-100): {{claim.fraud_risk_score}}
+Fraud risk level: {{claim.fraud_risk_level}}
+Fraud risk reasons: {{claim.fraud_risk_reasons}}
+Settlement recommendation: {{claim.settlement_recommendation}}
+Settlement based on: {{claim.settlement_reference_claims}}</prompt>
+        <prompt_template_role>user</prompt_template_role>
+        <provider_company/>
+        <request_tokens>32018</request_tokens>
+        <show_in_prompt_library>true</show_in_prompt_library>
+        <state>published</state>
+        <structured_output_enabled>false</structured_output_enabled>
+        <structured_output_schema/>
+        <sys_class_name>sys_generative_ai_config</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-26 07:24:03</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>b17e617164e703107f44bdf7b262ea4f</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_name>13a53f89906b03107f44b7be9ec885c1</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="Insurance Claim Processing Hub" source="x_snc_insurance_0">0d755344b9a303107f4438bce96291f7</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Insurance Claim Processing Hub">0d755344b9a303107f4438bce96291f7</sys_scope>
+        <sys_update_name>sys_generative_ai_config_b17e617164e703107f44bdf7b262ea4f</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-26 07:25:47</sys_updated_on>
+        <temperature>0.2</temperature>
+        <thinking_tokens>0</thinking_tokens>
+        <version>2</version>
+    </sys_generative_ai_config>
+</record_update>

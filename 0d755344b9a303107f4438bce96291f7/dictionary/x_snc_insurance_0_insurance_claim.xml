@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element attributes="enforce_dot_walk_cross_scope_access=true" db_object_id="0b169784b9a303107f4438bce9629151" label="Insurance Claim" max_length="40" name="x_snc_insurance_0_insurance_claim" type="collection">
+        <element label="Policy Number" max_length="40" name="policy_number" type="string"/>
+        <element label="Description" max_length="40" name="description" type="string"/>
+        <element label="Claim Amount" max_length="20" name="claim_amount" type="currency"/>
+        <element label="Claimant Name" max_length="40" name="claimant_name" type="string"/>
+        <element choice="1" label="Status" max_length="255" name="status" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Under Review" sequence="1" value="under_review"/>
+                <element inactive_on_update="false" label="Submitted" sequence="0" value="submitted"/>
+                <element inactive_on_update="false" label="Approved" sequence="2" value="approved"/>
+                <element inactive_on_update="false" label="Rejected" sequence="3" value="rejected"/>
+            </choice>
+        </element>
+        <element label="Incident Date" max_length="40" name="incident_date" type="glide_date"/>
+        <element choice="1" label="Claim Type" max_length="40" name="claim_type" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Motor" sequence="0" value="motor"/>
+                <element inactive_on_update="false" label="Health" sequence="1" value="health"/>
+                <element inactive_on_update="false" label="Property" sequence="2" value="property"/>
+                <element inactive_on_update="false" label="Others" sequence="3" value="others"/>
+            </choice>
+        </element>
+    </element>
+</database>

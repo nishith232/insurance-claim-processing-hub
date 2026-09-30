@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_choice action="INSERT_OR_UPDATE" field="document_type" table="x_snc_insurance_0_document" version="3">
+        <sys_choice_set action="INSERT_OR_UPDATE">
+            <element>document_type</element>
+            <name>x_snc_insurance_0_document</name>
+            <sys_class_name>sys_choice_set</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-09-22 13:32:17</sys_created_on>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>document_type</sys_name>
+            <sys_package display_value="Insurance Claim Processing Hub" source="x_snc_insurance_0">0d755344b9a303107f4438bce96291f7</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="Insurance Claim Processing Hub">0d755344b9a303107f4438bce96291f7</sys_scope>
+            <sys_update_name>sys_choice_x_snc_insurance_0_document_document_type</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-09-22 13:32:17</sys_updated_on>
+        </sys_choice_set>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>document_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Claim Form</label>
+            <language>en</language>
+            <name>x_snc_insurance_0_document</name>
+            <sequence>0</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-09-22 13:32:17</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-09-22 13:32:17</sys_updated_on>
+            <value>claim_form</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>document_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Police Report</label>
+            <language>en</language>
+            <name>x_snc_insurance_0_document</name>
+            <sequence>1</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-09-22 13:32:17</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-09-22 13:32:17</sys_updated_on>
+            <value>police_report</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>document_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Repair Invoice</label>
+            <language>en</language>
+            <name>x_snc_insurance_0_document</name>
+            <sequence>2</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-09-22 13:32:17</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-09-22 13:32:17</sys_updated_on>
+            <value>repair_invoice</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>document_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Medical Report</label>
+            <language>en</language>
+            <name>x_snc_insurance_0_document</name>
+            <sequence>3</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-09-22 13:32:17</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-09-22 13:32:17</sys_updated_on>
+            <value>medical_report</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>document_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Property Photos</label>
+            <language>en</language>
+            <name>x_snc_insurance_0_document</name>
+            <sequence>4</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-09-22 13:32:17</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-09-22 13:32:17</sys_updated_on>
+            <value>property_photos</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>document_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Travel Itinerary</label>
+            <language>en</language>
+            <name>x_snc_insurance_0_document</name>
+            <sequence>5</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-09-22 13:32:17</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-09-22 13:32:17</sys_updated_on>
+            <value>travel_itinerary</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>document_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Incident Report</label>
+            <language>en</language>
+            <name>x_snc_insurance_0_document</name>
+            <sequence>6</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-09-22 13:32:17</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-09-22 13:32:17</sys_updated_on>
+            <value>incident_report</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>document_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>ID Proof</label>
+            <language>en</language>
+            <name>x_snc_insurance_0_document</name>
+            <sequence>7</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-09-22 13:32:17</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-09-22 13:32:17</sys_updated_on>
+            <value>id_proof</value>
+        </sys_choice>
+    </sys_choice>
+</record_update>

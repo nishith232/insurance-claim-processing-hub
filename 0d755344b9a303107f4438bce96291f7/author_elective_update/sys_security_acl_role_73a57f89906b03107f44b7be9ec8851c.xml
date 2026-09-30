@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_security_acl_role">
+    <sys_security_acl_role action="DELETE">
+        <sys_class_name>sys_security_acl_role</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-24 09:19:23</sys_created_on>
+        <sys_id>73a57f89906b03107f44b7be9ec8851c</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>claim_adjuster_summary.e3a57f89906b03107f44b7be9ec8850a.snc_internal</sys_name>
+        <sys_package display_value="Insurance Claim Processing Hub" source="x_snc_insurance_0">0d755344b9a303107f4438bce96291f7</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Insurance Claim Processing Hub">0d755344b9a303107f4438bce96291f7</sys_scope>
+        <sys_security_acl display_value="claim_adjuster_summary.e3a57f89906b03107f44b7be9ec8850a">fba57f89906b03107f44b7be9ec88518</sys_security_acl>
+        <sys_update_name>sys_security_acl_role_73a57f89906b03107f44b7be9ec8851c</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-24 09:19:23</sys_updated_on>
+        <sys_user_role display_value="snc_internal" name="snc_internal">7fcaa702933002009c8579b4f47ffbde</sys_user_role>
+    </sys_security_acl_role>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="Insurance Claim Processing Hub">0d755344b9a303107f4438bce96291f7</application>
+        <file_path/>
+        <instance_id>8ad1cdc7c38fcf94a03197af05013156</instance_id>
+        <instance_name>ltm-hck-2876-0048</instance_name>
+        <name>sys_security_acl_role_73a57f89906b03107f44b7be9ec8851c</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_security_acl_role"><sys_security_acl_role action="INSERT_OR_UPDATE"><sys_class_name>sys_security_acl_role</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2026-09-24 09:19:23</sys_created_on><sys_id>73a57f89906b03107f44b7be9ec8851c</sys_id><sys_mod_count>0</sys_mod_count><sys_name>claim_adjuster_summary.e3a57f89906b03107f44b7be9ec8850a.snc_internal</sys_name><sys_package display_value="Insurance Claim Processing Hub" source="x_snc_insurance_0">0d755344b9a303107f4438bce96291f7</sys_package><sys_policy/><sys_scope display_value="Insurance Claim Processing Hub">0d755344b9a303107f4438bce96291f7</sys_scope><sys_security_acl display_value="claim_adjuster_summary.e3a57f89906b03107f44b7be9ec8850a">fba57f89906b03107f44b7be9ec88518</sys_security_acl><sys_update_name>sys_security_acl_role_73a57f89906b03107f44b7be9ec8851c</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2026-09-24 09:19:23</sys_updated_on><sys_user_role display_value="snc_internal" name="snc_internal">7fcaa702933002009c8579b4f47ffbde</sys_user_role></sys_security_acl_role></record_update>]]></payload>
+        <payload_hash>1222859844</payload_hash>
+        <record_name>claim_adjuster_summary.e3a57f89906b03107f44b7be9ec8850a.snc_internal</record_name>
+        <reverted_from/>
+        <source/>
+        <source_table>sys_upgrade_history</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-24 09:20:53</sys_created_on>
+        <sys_id>bd063bc9906b03107f44b7be9ec885e9</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>1a0d2b7c29d0000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-24 09:20:53</sys_updated_on>
+        <type>Access Roles</type>
+        <update_guid>7d063bc9e56b03104dfe0c709f699ae9</update_guid>
+        <update_guid_history>7d063bc9e56b03104dfe0c709f699ae9:1222859844</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="claim_adjuster_summary.e3a57f89906b03107f44b7be9ec8850a.snc_internal">3d063bc9906b03107f44b7be9ec885ea</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-24 09:20:53</sys_created_on>
+        <sys_db_object display_value="" name="sys_security_acl_role">sys_security_acl_role</sys_db_object>
+        <sys_id>52fa76d4b5ec44a0a9d4536396cbe840</sys_id>
+        <sys_metadata>73a57f89906b03107f44b7be9ec8851c</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>claim_adjuster_summary.e3a57f89906b03107f44b7be9ec8850a.snc_internal</sys_name>
+        <sys_package display_value="Insurance Claim Processing Hub" source="x_snc_insurance_0">0d755344b9a303107f4438bce96291f7</sys_package>
+        <sys_parent display_value="claim_adjuster_summary.e3a57f89906b03107f44b7be9ec8850a">fba57f89906b03107f44b7be9ec88518</sys_parent>
+        <sys_policy/>
+        <sys_scope display_value="Insurance Claim Processing Hub">0d755344b9a303107f4438bce96291f7</sys_scope>
+        <sys_scope_delete display_value="">05de2a3fa36e4a2b80f8ea5b119d12a9</sys_scope_delete>
+        <sys_update_name>sys_security_acl_role_73a57f89906b03107f44b7be9ec8851c</sys_update_name>
+        <sys_update_version display_value="sys_security_acl_role_73a57f89906b03107f44b7be9ec8851c">bd063bc9906b03107f44b7be9ec885e9</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-24 09:20:53</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

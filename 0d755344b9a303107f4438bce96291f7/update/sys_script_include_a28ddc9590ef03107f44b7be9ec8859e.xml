@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_snc_insurance_0.DocumentAIReader</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>DocumentAIReader</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[var DocumentAIReader = Class.create();
+DocumentAIReader.prototype = {
+    initialize: function() {
+        this.apiKey = gs.getProperty('x_snc_insurance_0.ai_api_key');
+        // Main model first, then backup models (comma-separated list in a property)
+        this.models = [gs.getProperty('x_snc_insurance_0.ai_model', 'gemini-3.8-flash')];
+        var backups = gs.getProperty('x_snc_insurance_0.ai_model_fallback', 'gemini-2.5-flash,gemini-3.5-flash');
+        var list = backups.split(',');
+        for (var i = 0; i < list.length; i++) {
+            var name = list[i].trim();
+            if (name && this.models.indexOf(name) == -1) this.models.push(name);
+        }
+    },
+
+    // Reads one Document record's file with Gemini and saves the results on it.
+    // Returns a short status text.
+    readDocument: function(docSysId) {
+        var doc = new GlideRecord('x_snc_insurance_0_document');
+        if (!doc.get(docSysId)) return 'Document not found';
+
+        var status;
+        try {
+            var att = new GlideRecord('sys_attachment');
+            att.addQuery('table_name', 'x_snc_insurance_0_document');
+            att.addQuery('table_sys_id', docSysId);
+            att.orderByDesc('sys_created_on');
+            att.setLimit(1);
+            att.query();
+
+            if (!att.next()) {
+                status = 'No file attached';
+            } else {
+                var base64 = new GlideSysAttachment().getContentBase64(att);
+                var result = this._callGemini(this._buildPrompt(), att.getValue('content_type'), base64);
+                var data = this._parseJson(result.text);
+
+                doc.setValue('ai_extracted_data', JSON.stringify(data, null, 1).substring(0, 7990));
+                this._mapKeyValues(doc, data);
+                status = 'Read OK (' + result.model + ')';
+            }
+        } catch (e) {
+            status = 'Failed: ' + (e.message || e);
+        }
+
+        doc.setValue('ai_read_status', String(status).substring(0, 250));
+        doc.update();   // this also triggers your existing recheck of the claim
+        return status;
+    },
+    // Gathers what the AI read from every uploaded document on a claim,
+    // saves it on the claim, runs the Now Assist "Claim Document Cross Check"
+    // skill, and saves the findings on the claim. Returns a short status text.
+    crossCheckClaim: function(claimSysId) {
+        var claim = new GlideRecord('x_snc_insurance_0_claim');
+        if (!claim.get(claimSysId)) return 'Claim not found';
+
+        // 1. Collect the extracted data from each document (compact form)
+        var docs = [];
+        var doc = new GlideRecord('x_snc_insurance_0_document');
+        doc.addQuery('claim_id', claimSysId);
+        doc.addQuery('upload_status', 'uploaded');
+        doc.query();
+        while (doc.next()) {
+            var raw = doc.getValue('ai_extracted_data');
+            if (!raw) continue;
+            try {
+                var d = JSON.parse(raw);
+                var fields = [];
+                var list = d.fields || [];
+                for (var i = 0; i < list.length; i++) {
+                    fields.push({ label: list[i].label, value: list[i].value, normalized: list[i].normalized });
+                }
+                docs.push({ document: doc.getValue('document_type'), fields: fields,
+                            blank_fields: d.blank_fields || [] });
+            } catch (e) {
+                // skip a document whose saved data is not valid JSON
+            }
+        }
+        if (docs.length == 0) {
+            return 'No AI-read documents yet. Click "Re-read Documents with AI" first.';
+        }
+
+        // 2. Save the data on the claim, so the skill can read it through the Claim record
+        claim.setValue('ai_documents_data', JSON.stringify(docs).substring(0, 15990));
+        claim.update();
+
+        // 3. Call the Now Assist cross-check skill (only the claim record is needed now)
+        var capabilityId = '7d59ec5d902343107f44b7be9ec885fd';
+        var request = {
+            executionRequests: [{
+                payload: {
+                    claim: { tableName: 'x_snc_insurance_0_claim', sysId: claimSysId, queryString: '' }
+                },
+                capabilityId: capabilityId
+            }],
+            mode: 'sync'
+        };
+        var output = sn_one_extend.OneExtendUtil.execute(request);
+        var result = output.capabilities[capabilityId];
+        if (!result || result.status != 'success') {
+            return 'Cross-check failed: ' + (result ? result.status : 'no response from Now Assist');
+        }
+
+        // 4. Save the findings on the claim
+        var findings = JSON.parse(result.response).model_output;
+        claim.setValue('ai_document_findings', String(findings).substring(0, 7990));
+        claim.update();
+        return 'Cross-check done on ' + docs.length + ' documents';
+    },
+    _buildPrompt: function() {
+        return 'You are reading ONE insurance claim document. Extract every piece of information that is clearly visible.\n' +
+            'Return ONLY a JSON object with this shape:\n' +
+            '{"document_kind": "short name of the document type",\n' +
+            ' "fields": [{"label": "field name as printed", "value": "value exactly as written",\n' +
+            '             "normalized": "dates as YYYY-MM-DD, times as HH:MM (24h), amounts as plain numbers, else same as value",\n' +
+            '             "category": "person | date | time | amount | vehicle | policy | location | reference | other"}],\n' +
+            ' "blank_fields": ["labels printed on the document that have no value"],\n' +
+            ' "key_values": {"incident_date": "date the accident/incident happened, YYYY-MM-DD, or empty",\n' +
+            '                "document_date": "date this document was issued or signed, YYYY-MM-DD, or empty",\n' +
+            '                "total_amount": "final total amount as a plain number, or empty"},\n' +
+            ' "notes": "anything unusual, or empty string"}\n' +
+            'Rules: copy values exactly; never guess or fill in missing values; if something is unreadable, write "unreadable".';
+    },
+
+    // Fills Date on Document / Amount on Document so the existing rule checks run automatically
+    _mapKeyValues: function(doc, data) {
+        var kv = data.key_values || {};
+        var type = doc.getValue('document_type');
+        var isoDate = /^\d{4}-\d{2}-\d{2}$/;
+        var matchTypes = ['claim_form', 'police_report', 'incident_report'];
+        var billTypes = ['repair_invoice', 'medical_report'];
+
+        if (matchTypes.indexOf(type) > -1 && isoDate.test(kv.incident_date || '')) {
+            doc.setValue('date_on_document', kv.incident_date);
+        }
+        if (billTypes.indexOf(type) > -1) {
+            if (isoDate.test(kv.document_date || '')) doc.setValue('date_on_document', kv.document_date);
+            var amt = parseFloat(kv.total_amount);
+            if (!isNaN(amt)) doc.setValue('amount_on_document', amt);
+        }
+    },
+
+    // Calls Gemini; retries once, then switches to the backup model if busy
+    _callGemini: function(prompt, mimeType, base64) {
+        var body = JSON.stringify({
+            contents: [{ parts: [
+                { text: prompt },
+                { inline_data: { mime_type: mimeType, data: base64 } }
+            ]}],
+            generationConfig: { responseMimeType: 'application/json', temperature: 0 }
+        });
+
+        var lastError = '';
+        for (var m = 0; m < this.models.length; m++) {
+            for (var attempt = 1; attempt <= 2; attempt++) {
+                var r = new sn_ws.RESTMessageV2();
+                r.setHttpMethod('post');
+                r.setEndpoint('https://generativelanguage.googleapis.com/v1beta/models/' +
+                              this.models[m] + ':generateContent');
+                r.setRequestHeader('x-goog-api-key', this.apiKey);
+                r.setRequestHeader('Content-Type', 'application/json');
+                r.setRequestBody(body);
+                r.setHttpTimeout(90000);
+
+                var resp = r.execute();
+                var code = resp.getStatusCode();
+                if (code == 200) {
+                    var parts = JSON.parse(resp.getBody()).candidates[0].content.parts;
+                    var text = '';
+                    for (var i = 0; i < parts.length; i++) {
+                        if (parts[i].text && !parts[i].thought) text += parts[i].text;
+                    }
+                    return { text: text, model: this.models[m] };
+                }
+                lastError = 'HTTP ' + code + ' from ' + this.models[m];
+                if (code != 503 && code != 429 && code != 500) break;   // retrying won't help
+            }
+        }
+        throw new Error(lastError || 'No response from AI');
+    },
+
+    // Turns the model's reply into an object, even if it is wrapped in ```json fences
+    _parseJson: function(text) {
+        var clean = String(text).replace(/```json/g, '').replace(/```/g, '').trim();
+        return JSON.parse(clean);
+    },
+        // Runs the full automatic analysis chain on a claim, in order:
+    // cross-check documents -> AI summary -> fraud risk -> settlement.
+    // Only runs once per claim unless something resets ai_analysis_done to false.
+    runFullAnalysis: function(claimSysId) {
+        var claim = new GlideRecord('x_snc_insurance_0_claim');
+        if (!claim.get(claimSysId)) return;
+
+        if (claim.getValue('ai_analysis_done').toString().match(/^(true|1)$/i)) {
+            return; // already analyzed, nothing to do
+        }
+
+        try {
+            // 1. Cross-check documents (uses this same Script Include)
+            this.crossCheckClaim(claimSysId);
+
+            // 2. Generate the plain-language summary
+            // (summary now runs last, below)
+
+            // 3. Calculate fraud risk
+            new FraudRiskScorer().rescore(claimSysId);
+
+            // 4. Calculate settlement recommendation
+            new SettlementRecommender().recalculate(claimSysId);
+
+            // Summary last, so it can mention fraud risk and settlement
+            this._generateSummary(claimSysId);
+
+            // Mark done so this doesn't re-run every time the claim is opened
+            var claimGr = new GlideRecord('x_snc_insurance_0_claim');
+            if (claimGr.get(claimSysId)) {
+                claimGr.setValue('ai_analysis_done', true);
+                claimGr.update();
+            }
+        } catch (e) {
+            gs.warn('runFullAnalysis failed for claim ' + claimSysId + ': ' + e);
+        }
+    },
+
+    // Calls the Claim Adjuster Summary Now Assist skill and saves the result.
+    _generateSummary: function(claimSysId) {
+        var capabilityId = 'c7a53f89906b03107f44b7be9ec8858d';   // Claim Adjuster Summary skill
+        var request = {
+            executionRequests: [{
+                payload: {
+                    claim: { tableName: 'x_snc_insurance_0_claim', sysId: claimSysId, queryString: '' }
+                },
+                capabilityId: capabilityId
+            }],
+            mode: 'sync'
+        };
+
+        var output = sn_one_extend.OneExtendUtil.execute(request);
+        var result = output.capabilities[capabilityId];
+        if (result && result.status == 'success') {
+            var summary = JSON.parse(result.response).model_output;
+            var claimGr = new GlideRecord('x_snc_insurance_0_claim');
+            if (claimGr.get(claimSysId)) {
+                claimGr.setValue('ai_summary', summary);
+                claimGr.update();
+            }
+        }
+    },
+    type: 'DocumentAIReader'
+};]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-24 12:14:09</sys_created_on>
+        <sys_id>a28ddc9590ef03107f44b7be9ec8859e</sys_id>
+        <sys_mod_count>6</sys_mod_count>
+        <sys_name>DocumentAIReader</sys_name>
+        <sys_package display_value="Insurance Claim Processing Hub" source="x_snc_insurance_0">0d755344b9a303107f4438bce96291f7</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="Insurance Claim Processing Hub">0d755344b9a303107f4438bce96291f7</sys_scope>
+        <sys_update_name>sys_script_include_a28ddc9590ef03107f44b7be9ec8859e</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-28 07:07:56</sys_updated_on>
+    </sys_script_include>
+</record_update>

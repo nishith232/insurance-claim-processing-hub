@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element attributes="enforce_dot_walk_cross_scope_access=true" db_object_id="f1ca52ec64af03107f447239048e4e5e" label="Document" max_length="40" name="x_snc_insurance_0_document" type="collection">
+        <element label="Document Type" max_length="40" name="document_type" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="ID Proof" sequence="7" value="id_proof"/>
+                <element inactive_on_update="false" label="Medical Report" sequence="3" value="medical_report"/>
+                <element inactive_on_update="false" label="Repair Invoice" sequence="2" value="repair_invoice"/>
+                <element inactive_on_update="false" label="Incident Report" sequence="6" value="incident_report"/>
+                <element inactive_on_update="false" label="Travel Itinerary" sequence="5" value="travel_itinerary"/>
+                <element inactive_on_update="false" label="Police Report" sequence="1" value="police_report"/>
+                <element inactive_on_update="false" label="Property Photos" sequence="4" value="property_photos"/>
+                <element inactive_on_update="false" label="Claim Form" sequence="0" value="claim_form"/>
+            </choice>
+        </element>
+        <element label="AI Read Status" max_length="255" name="ai_read_status" type="string"/>
+        <element label="Claim ID" mandatory="true" max_length="32" name="claim_id" reference="x_snc_insurance_0_claim" type="reference"/>
+        <element label="Amount on Document" max_length="100" name="amount_on_document" type="decimal"/>
+        <element default="uploaded" label="Upload Status" max_length="40" name="upload_status" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Under Review" sequence="2" value="under_review"/>
+                <element inactive_on_update="false" label="Uploaded" sequence="0" value="uploaded"/>
+                <element inactive_on_update="false" label="Missing" sequence="1" value="missing"/>
+            </choice>
+        </element>
+        <element label="Date on Document" max_length="40" name="date_on_document" type="glide_date"/>
+        <element label="Uploaded Date" max_length="255" name="uploaded_date" type="glide_date_time"/>
+        <element attributes="ignore_filter_on_new=true" default="javascript:global.getNextObjNumberPadded();" display="true" label="Number" max_length="40" name="number" type="string"/>
+        <element label="AI Extracted Data" max_length="8000" name="ai_extracted_data" type="string"/>
+        <index name="index">
+            <element name="claim_id"/>
+        </index>
+    </element>
+</database>

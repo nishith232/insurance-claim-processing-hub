@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sc_cat_item_producer">
+    <sc_cat_item_producer action="INSERT_OR_UPDATE">
+        <access_type>restricted</access_type>
+        <active>true</active>
+        <additional_review>false</additional_review>
+        <allow_edit>false</allow_edit>
+        <availability>on_desktop</availability>
+        <billable>false</billable>
+        <can_cancel>false</can_cancel>
+        <category display_value="General">abc78de49f331200d9011977677fcfb2</category>
+        <cc_render_type>system</cc_render_type>
+        <checked_out/>
+        <cost>0</cost>
+        <create_universal_request>false</create_universal_request>
+        <custom_cart/>
+        <delivery_plan display_value="DEFAULT">523da512c611228900811a37c97c2014</delivery_plan>
+        <delivery_plan_script/>
+        <delivery_time>1970-01-03 00:00:00</delivery_time>
+        <description/>
+        <display_price_property>non_zero</display_price_property>
+        <entitlement_script/>
+        <flow_designer_flow/>
+        <fulfillment_automation_level>unspecified</fulfillment_automation_level>
+        <group/>
+        <hide_sp>false</hide_sp>
+        <icon/>
+        <ignore_price>true</ignore_price>
+        <image/>
+        <location/>
+        <make_item_non_conversational>false</make_item_non_conversational>
+        <mandatory_attachment>false</mandatory_attachment>
+        <meta/>
+        <mobile_hide_price>false</mobile_hide_price>
+        <mobile_picture/>
+        <mobile_picture_type>use_desktop_picture</mobile_picture_type>
+        <model/>
+        <name>Submit a Claim</name>
+        <no_attachment_v2>false</no_attachment_v2>
+        <no_cart>false</no_cart>
+        <no_cart_v2>false</no_cart_v2>
+        <no_delivery_time_v2>false</no_delivery_time_v2>
+        <no_order>false</no_order>
+        <no_order_now>false</no_order_now>
+        <no_proceed_checkout>false</no_proceed_checkout>
+        <no_quantity>false</no_quantity>
+        <no_quantity_v2>false</no_quantity_v2>
+        <no_save_as_draft>false</no_save_as_draft>
+        <no_search>false</no_search>
+        <no_wishlist_v2>false</no_wishlist_v2>
+        <omit_price>false</omit_price>
+        <order>0</order>
+        <ordered_item_link/>
+        <owner display_value="System Administrator">6816f79cc0a8016401c5a33be04be441</owner>
+        <picture/>
+        <post_insert_script><![CDATA[/**
+* This script is executed after the record is generated. 
+* `current` Is the GlideRecord produced by Record Producer. Use `current.update()` to update the record
+* To access the variables, use `producer.var1` where var1 is the name of the variable
+* To access the Record Producer use `cat_item`
+*/]]></post_insert_script>
+        <preview>JavaScript: popupOpenStandard("com.glideapp.servicecatalog_cat_item_view.do?v=1&amp;sysparm_id=2515f8e0646303107f447239048e4ea3&amp;sysparm_preview=true", "summary");</preview>
+        <price>0</price>
+        <published_ref/>
+        <recurring_frequency/>
+        <redirect_url>generated_record</redirect_url>
+        <request_method/>
+        <roles/>
+        <save_options/>
+        <save_script><![CDATA[/**
+* This script is executed at every step save in Catalog Builder. 
+* This script is executed before `Script` is executed.
+* `current` Is the GlideRecord produced by Record Producer. 
+* To access the variables, use `producer.var1` where var1 is the name of the variable
+* To access the Record Producer use `cat_item`
+*/]]></save_script>
+        <sc_catalogs>65bcd377c3011200b12d9f2974d3aea0,0f910a2ac3112200b12d9f2974d3ae3c,7b0370019f22120047a2d126c42e7075</sc_catalogs>
+        <sc_ic_item_staging/>
+        <sc_ic_version/>
+        <sc_template/>
+        <script><![CDATA[// ---- 0. Ownership check: customers can only claim against their own policy ----
+var enteredPolicy = (producer.policy_number_text || '').toString().trim();
+var policyGr = new GlideRecord('x_snc_insurance_0_policy');
+policyGr.addQuery('policy_number', enteredPolicy);
+policyGr.setLimit(1);
+policyGr.query();
+
+var policyOk = false;
+if (policyGr.next()) {
+    var isStaff = gs.hasRole('admin') || gs.hasRole('x_snc_insurance_0.policy_user');
+    policyOk = isStaff || policyGr.getValue('policy_owner') == gs.getUserID();
+}
+
+if (!policyOk) {
+    gs.addErrorMessage('This policy number is not linked to your account. Please check it and try again.');
+    current.setAbortAction(true);
+} else {
+    // The Claim's Policy Number is a reference field, so store the policy record itself
+    current.setValue('policy_number', policyGr.getUniqueValue());
+
+    // ---- 1. System-controlled claim fields ----
+    current.setValue('submitted_by', gs.getUserID());
+    var now = new GlideDateTime().getValue();
+    current.setValue('date_of_submission', now);
+    current.setValue('last_updated', now);
+    current.setValue('claim_status', 'submitted');
+
+    // Create a linked Customer Service Case for this claim
+    var caseGr = new GlideRecord('sn_customerservice_case');
+    caseGr.initialize();
+    caseGr.setValue('short_description', 'Insurance claim - ' + current.getValue('claim_type') + ' - ' +
+        current.getValue('short_description'));
+    caseGr.setValue('description', 'Auto-created for claim ' + current.getValue('number') +
+        '. Claim type: ' + current.getValue('claim_type') +
+        '. Date of incident: ' + current.getValue('date_of_incident'));
+
+    // Look up this user's Consumer record (the correct B2C ownership link for CSM)
+    var consumer = new GlideRecord('csm_consumer');
+    consumer.addQuery('user', gs.getUserID());
+    consumer.query();
+    if (consumer.next()) {
+        caseGr.setValue('consumer', consumer.getUniqueValue());
+    } else {
+        // Fallback for internal/admin test submissions with no Consumer record
+        caseGr.setValue('contact', gs.getUserID());
+        caseGr.setValue('account', gs.getUserID());
+    }
+    var adjusterGroup = new GlideRecord('sys_user_group');
+    if (adjusterGroup.get('name', 'Claims Adjusters')) {
+        caseGr.setValue('assignment_group', adjusterGroup.getUniqueValue());
+    }
+    caseGr.comments = 'We have received your claim and are checking it now. We will keep you updated here.';
+    var caseSysId = caseGr.insert();
+
+    
+
+    current.setValue('customer_case', caseSysId);
+    producer.portal_redirect = '?id=csm_ticket&table=sn_customerservice_case&sys_id=' + caseSysId;
+
+
+    // ---- 2. Give the claim its ID now, so documents can link to it ----
+    // The form saves the claim itself right after this script, so no current.insert() here.
+    var claimSysId = gs.generateGUID();
+    current.setNewGuidValue(claimSysId);
+
+    // ---- 3. Which documents are mandatory for this claim type? ----
+    var mandatory = {};
+    var rule = new GlideRecord('x_snc_insurance_0_claim_type_document_rules');
+    rule.addQuery('claim_type', current.getValue('claim_type'));
+    rule.addQuery('is_mandatory', true);
+    rule.query();
+    while (rule.next()) {
+        mandatory[rule.getValue('required_document_type')] = true;
+    }
+
+    // ---- 4. Create Document records ----
+    // Uploaded file -> "uploaded" record with the file copied onto it
+    // Mandatory but not uploaded -> "missing" placeholder
+    // Not uploaded and not needed for this claim type -> skipped
+    var docTypes = ['claim_form', 'police_report', 'repair_invoice', 'id_proof',
+        'medical_report', 'property_photos', 'incident_report', 'travel_itinerary'
+    ];
+
+    for (var i = 0; i < docTypes.length; i++) {
+        var docType = docTypes[i];
+        var value = producer['doc_' + docType];
+        var attachmentId = value ? value.toString() : '';
+
+        if (!attachmentId && !mandatory[docType]) {
+            continue;
+        }
+
+        var doc = new GlideRecord('x_snc_insurance_0_document');
+        doc.initialize();
+        doc.setValue('claim_id', claimSysId);
+        doc.setValue('document_type', docType);
+
+        if (attachmentId) {
+            doc.setValue('upload_status', 'uploaded');
+            doc.setValue('uploaded_date', now);
+            doc.insert();
+
+            // Copy exactly this customer's file onto the Document record
+            try {
+                var att = new GlideRecord('sys_attachment');
+                if (att.get(attachmentId)) {
+                    var gsa = new GlideSysAttachment();
+                    gsa.writeContentStream(doc, att.getValue('file_name'),
+                        att.getValue('content_type'), gsa.getContentStream(attachmentId));
+                }
+            } catch (e) {
+                gs.warn('Could not copy file for ' + docType + ': ' + e);
+            }
+        } else {
+            doc.setValue('upload_status', 'missing');
+            doc.insert();
+        }
+    }
+}]]></script>
+        <secondary_owners/>
+        <short_description>Submit a new insurance claim with required details and supporting documents.</short_description>
+        <show_variable_help_on_load>false</show_variable_help_on_load>
+        <start_closed>false</start_closed>
+        <state/>
+        <sys_class_name>sc_cat_item_producer</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-22 06:12:29</sys_created_on>
+        <sys_id>2515f8e0646303107f447239048e4ea3</sys_id>
+        <sys_mod_count>114</sys_mod_count>
+        <sys_name>Submit a Claim</sys_name>
+        <sys_package display_value="Insurance Claim Processing Hub" source="x_snc_insurance_0">0d755344b9a303107f4438bce96291f7</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Insurance Claim Processing Hub">0d755344b9a303107f4438bce96291f7</sys_scope>
+        <sys_update_name>sc_cat_item_producer_2515f8e0646303107f447239048e4ea3</sys_update_name>
+        <sys_updated_by>system</sys_updated_by>
+        <sys_updated_on>2026-09-29 10:30:30</sys_updated_on>
+        <table_name>x_snc_insurance_0_claim</table_name>
+        <taxonomy_topic/>
+        <template/>
+        <template_manager_roles/>
+        <turn_off_nowassist_conversation>false</turn_off_nowassist_conversation>
+        <type>item</type>
+        <use_sc_layout>true</use_sc_layout>
+        <vendor/>
+        <version>116</version>
+        <view/>
+        <visible_bundle>true</visible_bundle>
+        <visible_guide>true</visible_guide>
+        <visible_standalone>true</visible_standalone>
+        <workflow/>
+    </sc_cat_item_producer>
+    <sys_translated_text action="delete_multiple" query="documentkey=2515f8e0646303107f447239048e4ea3"/>
+    <fx_price action="delete_multiple" query="id=2515f8e0646303107f447239048e4ea3"/>
+    <fx_price action="INSERT_OR_UPDATE">
+        <amount>0</amount>
+        <currency display_value="GBP">GBP</currency>
+        <field>price</field>
+        <id>2515f8e0646303107f447239048e4ea3</id>
+        <parent/>
+        <reference_amount>0</reference_amount>
+        <reference_currency display_value="USD">USD</reference_currency>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-22 06:12:30</sys_created_on>
+        <sys_id>e6b77c28646303107f447239048e4eb3</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-22 06:12:30</sys_updated_on>
+        <table>sc_cat_item_producer</table>
+        <type>calculated</type>
+    </fx_price>
+</record_update>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sn_nowassist_skill_config">
+    <sn_nowassist_skill_config action="INSERT_OR_UPDATE">
+        <active>false</active>
+        <description><![CDATA[Summarizes an insurance claim in plain language for the adjuster, using the completeness and consistency results. Never makes the decision.]]></description>
+        <edited_in_nask>false</edited_in_nask>
+        <in_product_active>false</in_product_active>
+        <in_product_roles/>
+        <internal_name>claim_adjuster_summary.e3a57f89906b03107f44b7be9ec8850a</internal_name>
+        <is_template>false</is_template>
+        <name>Claim Adjuster Summary</name>
+        <nap_skill_applicability/>
+        <order>100</order>
+        <parent/>
+        <skill_family display_value="Other">a5efaf1c93764210aa5730f16489186d</skill_family>
+        <skill_id>c7a53f89906b03107f44b7be9ec8858d</skill_id>
+        <skill_table>sys_one_extend_capability</skill_table>
+        <state>1</state>
+        <success_message/>
+        <sys_class_name>sn_nowassist_skill_config</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-24 09:19:22</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_id>e3a57f89906b03107f44b7be9ec8850a</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>Claim Adjuster Summary</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="Insurance Claim Processing Hub" source="x_snc_insurance_0">0d755344b9a303107f4438bce96291f7</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Insurance Claim Processing Hub">0d755344b9a303107f4438bce96291f7</sys_scope>
+        <sys_update_name>sn_nowassist_skill_config_e3a57f89906b03107f44b7be9ec8850a</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-24 09:44:19</sys_updated_on>
+    </sn_nowassist_skill_config>
+    <sys_translated_text action="delete_multiple" query="documentkey=e3a57f89906b03107f44b7be9ec8850a"/>
+</record_update>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_atf_step">
+    <sys_atf_step action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <callable_outputs/>
+        <copied_from/>
+        <description>Run Server Side Validation Script</description>
+        <display_name>Run Server Side Script</display_name>
+        <inputs/>
+        <mugshots_cache_json/>
+        <notes/>
+        <order>1</order>
+        <step_config display_value="Run Server Side Script">41de4a935332120028bc29cac2dc349a</step_config>
+        <sys_class_name>sys_atf_step</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-26 15:32:21</sys_created_on>
+        <sys_id>e52e5bb9646743107f44bdf7b262ea79</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Run Server Side Script</sys_name>
+        <sys_package display_value="Insurance Claim Processing Hub" source="x_snc_insurance_0">0d755344b9a303107f4438bce96291f7</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Insurance Claim Processing Hub">0d755344b9a303107f4438bce96291f7</sys_scope>
+        <sys_update_name>sys_atf_step_e52e5bb9646743107f44bdf7b262ea79</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-26 15:32:21</sys_updated_on>
+        <table/>
+        <test display_value="Settlement Recommendation - Motor claim">eced5379646743107f44bdf7b262ea75</test>
+        <timeout/>
+        <warning_message/>
+    </sys_atf_step>
+    <sys_variable_value action="delete_multiple" query="document_key=e52e5bb9646743107f44bdf7b262ea79"/>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>sys_atf_step</document>
+        <document_key>e52e5bb9646743107f44bdf7b262ea79</document_key>
+        <order>100</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-26 15:32:21</sys_created_on>
+        <sys_id>2e3edbb9646743107f44bdf7b262ea77</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-26 15:32:21</sys_updated_on>
+        <value>3.1</value>
+        <variable display_value="Jasmine version">42f2564b73031300440211d8faf6a777</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>sys_atf_step</document>
+        <document_key>e52e5bb9646743107f44bdf7b262ea79</document_key>
+        <order>200</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-26 15:32:21</sys_created_on>
+        <sys_id>623edbb9646743107f44bdf7b262ea78</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-26 15:32:21</sys_updated_on>
+        <value>var claim = new GlideRecord('x_snc_insurance_0_claim');&#13;
+claim.initialize();&#13;
+claim.setValue('claim_type', 'motor');&#13;
+claim.setValue('claim_amount_requested', 76000);&#13;
+&#13;
+new SettlementRecommender().evaluate(claim);&#13;
+&#13;
+var recommendation = claim.getValue('settlement_recommendation');&#13;
+var references = claim.getValue('settlement_reference_claims');&#13;
+&#13;
+// Assertions&#13;
+if (!recommendation || recommendation.indexOf('Rs.') == -1) {&#13;
+    throw new Error('Expected a settlement range starting with "Rs.", got: ' + recommendation);&#13;
+}&#13;
+if (!references || references.indexOf('HIST-') == -1) {&#13;
+    throw new Error('Expected reference claims containing "HIST-", got: ' + references);&#13;
+}&#13;
+if ((references.match(/HIST-/g) || []).length != 3) {&#13;
+    throw new Error('Expected exactly 3 reference claims, got: ' + references);&#13;
+}&#13;
+&#13;
+gs.info('PASS: ' + recommendation + ' | ' + references);</value>
+        <variable display_value="Test script">989d9e235324220002c6435723dc3484</variable>
+    </sys_variable_value>
+</record_update>

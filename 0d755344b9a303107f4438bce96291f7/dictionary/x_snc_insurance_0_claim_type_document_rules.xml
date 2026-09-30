@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element attributes="enforce_dot_walk_cross_scope_access=true" db_object_id="d0001a68646f03107f447239048e4e52" label="Claim Type Document Rules" max_length="40" name="x_snc_insurance_0_claim_type_document_rules" type="collection">
+        <element label="Is Mandatory" max_length="40" name="is_mandatory" type="boolean"/>
+        <element label="Claim Type" max_length="40" name="claim_type" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Property" sequence="2" value="property"/>
+                <element inactive_on_update="false" label="Motor" sequence="0" value="motor"/>
+                <element inactive_on_update="false" label="Travel" sequence="3" value="travel"/>
+                <element inactive_on_update="false" label="Health" sequence="1" value="health"/>
+            </choice>
+        </element>
+        <element label="Required Document Type" max_length="40" name="required_document_type" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Claim Form" sequence="0" value="claim_form"/>
+                <element inactive_on_update="false" label="Repair Invoice" sequence="2" value="repair_invoice"/>
+                <element inactive_on_update="false" label="Incident Report" sequence="6" value="incident_report"/>
+                <element inactive_on_update="false" label="Property Photos" sequence="4" value="property_photos"/>
+                <element inactive_on_update="false" label="Travel Itinerary" sequence="5" value="travel_itinerary"/>
+                <element inactive_on_update="false" label="Medical Report" sequence="3" value="medical_report"/>
+                <element inactive_on_update="false" label="Police Report" sequence="1" value="police_report"/>
+                <element inactive_on_update="false" label="ID Proof" sequence="7" value="id_proof"/>
+            </choice>
+        </element>
+    </element>
+</database>

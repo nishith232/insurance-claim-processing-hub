@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_gen_ai_feature_mapping">
+    <sys_gen_ai_feature_mapping action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <customer_updatable>true</customer_updatable>
+        <default_tier>false</default_tier>
+        <document>c7a53f89906b03107f44b7be9ec8858d</document>
+        <document_table>sys_one_extend_capability</document_table>
+        <feature_name>Claim Adjuster Summary</feature_name>
+        <licensable>true</licensable>
+        <metadata/>
+        <skip_on_group_call>false</skip_on_group_call>
+        <sys_class_name>sys_gen_ai_feature_mapping</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-24 09:19:21</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>d7a53f89906b03107f44b7be9ec885b8</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Claim Adjuster Summary</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="Insurance Claim Processing Hub" source="x_snc_insurance_0">0d755344b9a303107f4438bce96291f7</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Insurance Claim Processing Hub">0d755344b9a303107f4438bce96291f7</sys_scope>
+        <sys_update_name>sys_gen_ai_feature_mapping_d7a53f89906b03107f44b7be9ec885b8</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-24 09:19:21</sys_updated_on>
+        <tier/>
+    </sys_gen_ai_feature_mapping>
+    <sys_translated_text action="delete_multiple" query="documentkey=d7a53f89906b03107f44b7be9ec885b8"/>
+</record_update>

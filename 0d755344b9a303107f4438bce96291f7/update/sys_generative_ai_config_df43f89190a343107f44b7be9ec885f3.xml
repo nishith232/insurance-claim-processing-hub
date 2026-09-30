@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_generative_ai_config">
+    <sys_generative_ai_config action="INSERT_OR_UPDATE">
+        <active>false</active>
+        <additional_configurations>{"skill_config_id":"0a59209d902343107f44b7be9ec88563"}</additional_configurations>
+        <ai_suggested>false</ai_suggested>
+        <definition>3d59209d902343107f44b7be9ec88530</definition>
+        <definition_table>sys_one_extend_capability_definition</definition_table>
+        <documentation/>
+        <max_tokens>500</max_tokens>
+        <min_word_count>-1</min_word_count>
+        <model>llm_generic_small</model>
+        <name>Incident Summarization</name>
+        <parent/>
+        <prompt>You are helping an insurance claims adjuster check whether a claim's documents agree with each other and with the claim.
+
+Claim details:
+Claim number: {{claim.number}}
+Claim type: {{claim.claim_type}}
+Date of incident on the claim: {{claim.date_of_incident}}
+Amount requested (INR): {{claim.claim_amount_requested}}
+Description: {{claim.short_description}}
+
+Data extracted from each document (JSON, one block per document):
+{{claim.ai_documents_data}}
+
+Your tasks:
+1. Compare every detail that appears in more than one document: person names, age and date of birth (work out the age from the date of birth at the incident date and compare it with any stated age), gender, incident date, incident time, location, vehicle registration number, vehicle model and policy number.
+2. Compare the amount requested on the claim and on the claim form with the final total on any bill (repair invoice or medical report).
+3. List any field that is printed on a document but is blank or unreadable.
+
+Rules:
+- Use only the data given. Do not invent anything.
+- Treat pure formatting differences as matches (for example "AP16BX4521" and "AP 16 BX 4521", or "10:30 PM" and "22:30").
+- Do not approve, reject or decide the claim, and do not call it fraud.
+- Refer to documents by readable names: Claim Form, Police Report, Repair Invoice, ID Proof, Medical Report, Property Photos, Incident Report, Travel Itinerary.
+- If the document data above is empty or missing, reply only with: "No document data was provided, so no cross-check was done."
+- Under CONSISTENT, list only details that appear in at least two documents and match. Leave out anything found in only one document.
+
+Reply in exactly this format, with no extra headings:
+MISMATCHES:
+- Field name: what differs (Document A vs Document B)
+MISSING OR BLANK:
+- Field name on Document name
+CONSISTENT:
+- Field name (Document A, Document B)
+Write "None found." under any heading with nothing to report.
+
+Example of one mismatch line:
+- Vehicle registration: AP 16 BX 4521 on Police Report vs AP 16 BX 4512 on Repair Invoice (Police Report vs Repair Invoice)</prompt>
+        <prompt_template_role>user</prompt_template_role>
+        <provider_company/>
+        <request_tokens>32018</request_tokens>
+        <show_in_prompt_library>true</show_in_prompt_library>
+        <state>archived</state>
+        <structured_output_enabled>false</structured_output_enabled>
+        <structured_output_schema/>
+        <sys_class_name>sys_generative_ai_config</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-24 13:48:36</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>df43f89190a343107f44b7be9ec885f3</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_name>3d59209d902343107f44b7be9ec88530</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="Insurance Claim Processing Hub" source="x_snc_insurance_0">0d755344b9a303107f4438bce96291f7</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Insurance Claim Processing Hub">0d755344b9a303107f4438bce96291f7</sys_scope>
+        <sys_update_name>sys_generative_ai_config_df43f89190a343107f44b7be9ec885f3</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-24 13:53:14</sys_updated_on>
+        <temperature>0.2</temperature>
+        <thinking_tokens>0</thinking_tokens>
+        <version>4</version>
+    </sys_generative_ai_config>
+</record_update>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sc_cat_item_user_criteria_no_mtom">
+    <sc_cat_item_user_criteria_no_mtom action="DELETE">
+        <sc_cat_item display_value="Submit a Claim">2515f8e0646303107f447239048e4ea3</sc_cat_item>
+        <sys_class_name>sc_cat_item_user_criteria_no_mtom</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-22 06:12:30</sys_created_on>
+        <sys_id>6ab77c28646303107f447239048e4eb1</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Submit a Claim.SNC External</sys_name>
+        <sys_package display_value="Insurance Claim Processing Hub" source="x_snc_insurance_0">0d755344b9a303107f4438bce96291f7</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Insurance Claim Processing Hub">0d755344b9a303107f4438bce96291f7</sys_scope>
+        <sys_update_name>sc_cat_item_user_criteria_no_mtom_6ab77c28646303107f447239048e4eb1</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-22 06:12:30</sys_updated_on>
+        <user_criteria display_value="">66c1b50e730333009508738234f6a7c9</user_criteria>
+    </sc_cat_item_user_criteria_no_mtom>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="Insurance Claim Processing Hub">0d755344b9a303107f4438bce96291f7</application>
+        <file_path/>
+        <instance_id>8ad1cdc7c38fcf94a03197af05013156</instance_id>
+        <instance_name>ltm-hck-2876-0048</instance_name>
+        <name>sc_cat_item_user_criteria_no_mtom_6ab77c28646303107f447239048e4eb1</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="sc_cat_item_user_criteria_no_mtom"><sc_cat_item_user_criteria_no_mtom action="INSERT_OR_UPDATE"><sc_cat_item display_value="Submit a Claim">2515f8e0646303107f447239048e4ea3</sc_cat_item><sys_class_name>sc_cat_item_user_criteria_no_mtom</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2026-09-22 06:12:30</sys_created_on><sys_id>6ab77c28646303107f447239048e4eb1</sys_id><sys_mod_count>0</sys_mod_count><sys_name>Submit a Claim.SNC External</sys_name><sys_package display_value="Insurance Claim Processing Hub" source="x_snc_insurance_0">0d755344b9a303107f4438bce96291f7</sys_package><sys_policy/><sys_scope display_value="Insurance Claim Processing Hub">0d755344b9a303107f4438bce96291f7</sys_scope><sys_update_name>sc_cat_item_user_criteria_no_mtom_6ab77c28646303107f447239048e4eb1</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2026-09-22 06:12:30</sys_updated_on><user_criteria display_value="">66c1b50e730333009508738234f6a7c9</user_criteria></sc_cat_item_user_criteria_no_mtom></record_update>]]></payload>
+        <payload_hash>-1679469360</payload_hash>
+        <record_name>Submit a Claim.SNC External</record_name>
+        <reverted_from/>
+        <source/>
+        <source_table>sys_upgrade_history</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-27 12:14:03</sys_created_on>
+        <sys_id>eb6a77c2982f03107f44f67b68592225</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>1a0e2c95f2c0000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-27 12:14:03</sys_updated_on>
+        <type>Catalog Item Not Available for</type>
+        <update_guid>ab6a77c2a12f03100cadd80f27a05725</update_guid>
+        <update_guid_history>ab6a77c2a12f03100cadd80f27a05725:-1679469360</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="Submit a Claim.SNC External">a76a77c2982f03107f44f67b68592226</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-27 12:14:03</sys_created_on>
+        <sys_db_object display_value="" name="sc_cat_item_user_criteria_no_mtom">sc_cat_item_user_criteria_no_mtom</sys_db_object>
+        <sys_id>16ec44334f77415f8a3b82cb06f86059</sys_id>
+        <sys_metadata>6ab77c28646303107f447239048e4eb1</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Submit a Claim.SNC External</sys_name>
+        <sys_package display_value="Insurance Claim Processing Hub" source="x_snc_insurance_0">0d755344b9a303107f4438bce96291f7</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="Insurance Claim Processing Hub">0d755344b9a303107f4438bce96291f7</sys_scope>
+        <sys_scope_delete display_value="">05de2a3fa36e4a2b80f8ea5b119d12a9</sys_scope_delete>
+        <sys_update_name>sc_cat_item_user_criteria_no_mtom_6ab77c28646303107f447239048e4eb1</sys_update_name>
+        <sys_update_version display_value="sc_cat_item_user_criteria_no_mtom_6ab77c28646303107f447239048e4eb1">eb6a77c2982f03107f44f67b68592225</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-27 12:14:03</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element attributes="enforce_dot_walk_cross_scope_access=true" db_object_id="5cd656e464af03107f447239048e4e10" label="Claim" max_length="40" name="x_snc_insurance_0_claim" type="collection">
+        <element label="AI Analysis Done" max_length="40" name="ai_analysis_done" type="boolean"/>
+        <element label="Approved Amount" max_length="38" name="approved_amount" type="currency"/>
+        <element label="Assigned Date" max_length="40" name="assigned_date" type="glide_date_time"/>
+        <element default="submitted" label="Claim Status" max_length="40" name="claim_status" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Missing Info" sequence="2" value="missing_info"/>
+                <element inactive_on_update="false" label="Approval" sequence="6" value="approval"/>
+                <element inactive_on_update="false" label="Fraud Assessment" sequence="3" value="fraud_assessment"/>
+                <element inactive_on_update="false" label="Closed" sequence="7" value="closed"/>
+                <element inactive_on_update="false" label="Rejected" sequence="8" value="rejected"/>
+                <element inactive_on_update="false" label="Submitted" sequence="0" value="submitted"/>
+                <element inactive_on_update="false" label="Adjuster Review" sequence="4" value="adjuster_review"/>
+                <element inactive_on_update="false" label="Settlement Recommendation" sequence="5" value="settlement_recommendation"/>
+                <element inactive_on_update="false" label="Document Validation" sequence="1" value="document_validation"/>
+            </choice>
+        </element>
+        <element label="Submitted By" max_length="32" name="submitted_by" reference="sys_user" type="reference"/>
+        <element label="Fast-Tracked" max_length="255" name="fast_tracked" type="boolean"/>
+        <element label="Last Updated" max_length="40" name="last_updated" type="glide_date_time"/>
+        <element label="Claim Amount Requested" max_length="38" name="claim_amount_requested" type="currency"/>
+        <element choice="1" label="Claim Type" max_length="40" name="claim_type" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Health" sequence="1" value="health"/>
+                <element inactive_on_update="false" label="Motor" sequence="0" value="motor"/>
+                <element inactive_on_update="false" label="Travel" sequence="3" value="travel"/>
+                <element inactive_on_update="false" label="Property" sequence="2" value="property"/>
+            </choice>
+        </element>
+        <element label="Assigned Adjuster" max_length="32" name="assigned_adjuster" reference="sys_user" type="reference"/>
+        <element label="Policy Number" max_length="32" name="policy_number" reference="x_snc_insurance_0_policy" type="reference"/>
+        <element label="Fraud Risk Reasons" max_length="4000" name="fraud_risk_reasons" type="string"/>
+        <element label="Date of Submission" max_length="40" name="date_of_submission" type="glide_date_time"/>
+        <element label="Consistency Issues" max_length="4000" name="consistency_issues" type="string"/>
+        <element label="Fraud Risk Score" max_length="40" name="fraud_risk_score" type="integer"/>
+        <element label="AI Documents Data" max_length="16000" name="ai_documents_data" type="string"/>
+        <element label="Settlement Reference Claims" max_length="1000" name="settlement_reference_claims" type="string"/>
+        <element label="Missing Documents" max_length="1000" name="missing_documents" type="string"/>
+        <element label="Fraud Risk Level" max_length="20" name="fraud_risk_level" type="string"/>
+        <element label="AI Document Findings" max_length="8000" name="ai_document_findings" type="string"/>
+        <element attributes="ignore_filter_on_new=true" default="javascript:global.getNextObjNumberPadded();" label="Number" max_length="40" name="number" type="string"/>
+        <element label="Manager Signoff By" max_length="32" name="manager_signoff_by" reference="sys_user" type="reference"/>
+        <element label="Short Description" max_length="1000" name="short_description" type="string"/>
+        <element label="Documents Consistent" max_length="40" name="documents_consistent" type="boolean"/>
+        <element label="Settlement Recommendation" max_length="200" name="settlement_recommendation" type="string"/>
+        <element label="Documents Complete" max_length="40" name="documents_complete" type="boolean"/>
+        <element label="Manager Reason" max_length="1000" name="manager_reason" type="string"/>
+        <element choice="1" label="Manager Signoff Status" max_length="40" name="manager_signoff_status" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Approved" sequence="2" value="approved"/>
+                <element inactive_on_update="false" label="Pending" sequence="1" value="pending"/>
+                <element inactive_on_update="false" label="Not Required" sequence="0" value="not_required"/>
+                <element inactive_on_update="false" label="Declined" sequence="3" value="declined"/>
+            </choice>
+        </element>
+        <element label="Customer Case" max_length="32" name="customer_case" reference="sn_customerservice_case" type="reference"/>
+        <element label="Date of Incident" max_length="40" name="date_of_incident" type="glide_date"/>
+        <element label="AI Summary" max_length="5000" name="ai_summary" type="string"/>
+        <index name="index">
+            <element name="policy_number"/>
+        </index>
+        <index name="index2">
+            <element name="assigned_adjuster"/>
+        </index>
+        <index name="index3">
+            <element name="submitted_by"/>
+        </index>
+        <index name="index4">
+            <element name="manager_signoff_by"/>
+        </index>
+        <index name="index5">
+            <element name="customer_case"/>
+        </index>
+    </element>
+</database>

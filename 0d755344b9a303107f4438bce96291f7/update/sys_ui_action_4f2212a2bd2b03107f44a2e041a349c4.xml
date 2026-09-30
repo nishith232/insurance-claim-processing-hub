@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_ui_action">
+    <sys_ui_action action="INSERT_OR_UPDATE">
+        <action_name>recommend_rejection</action_name>
+        <active>true</active>
+        <client>true</client>
+        <client_script_v2><![CDATA[function onClick(g_form) {
+
+}]]></client_script_v2>
+        <comments/>
+        <condition>current.getValue('assigned_adjuster') == gs.getUserID() &amp;&amp; current.getValue('claim_status') != 'closed'</condition>
+        <form_action>true</form_action>
+        <form_button>true</form_button>
+        <form_button_icon/>
+        <form_button_v2>false</form_button_v2>
+        <form_context_menu>false</form_context_menu>
+        <form_link>false</form_link>
+        <form_menu_button_v2>false</form_menu_button_v2>
+        <form_style>primary</form_style>
+        <format_for_configurable_workspace>false</format_for_configurable_workspace>
+        <hint/>
+        <isolate_script>false</isolate_script>
+        <list_action>false</list_action>
+        <list_banner_button>false</list_banner_button>
+        <list_button>false</list_button>
+        <list_button_icon/>
+        <list_choice>false</list_choice>
+        <list_context_menu>false</list_context_menu>
+        <list_link>false</list_link>
+        <list_save_with_form_button>false</list_save_with_form_button>
+        <list_style/>
+        <messages/>
+        <name>Recommend rejection</name>
+        <onclick>askForReason()</onclick>
+        <order>100</order>
+        <script><![CDATA[function askForReason() {
+    var reason = prompt('Why are you recommending rejection? This will be saved as an internal note, not sent to the customer.');
+    if (reason === null) { return false; }
+    reason = reason.trim();
+    if (!reason) { alert('Please type a reason first.'); return false; }
+    var ga = new GlideAjax('x_snc_insurance_0.IRISRequestInfo');
+    ga.addParam('sysparm_name', 'reject');
+    ga.addParam('sysparm_claim', g_form.getUniqueValue());
+    ga.addParam('sysparm_message', reason);
+    ga.getXMLAnswer(function(answer) {
+        if (answer === 'ok') {
+            window.location.reload();
+        } else {
+            alert('Could not record: ' + answer);
+        }
+    });
+    return false;
+}]]></script>
+        <show_form_icon_only>false</show_form_icon_only>
+        <show_insert>false</show_insert>
+        <show_list_icon_only>false</show_list_icon_only>
+        <show_multiple_update>false</show_multiple_update>
+        <show_query>false</show_query>
+        <show_update>true</show_update>
+        <sys_class_name>sys_ui_action</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-28 17:56:25</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>4f2212a2bd2b03107f44a2e041a349c4</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>Recommend rejection</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="Insurance Claim Processing Hub" source="x_snc_insurance_0">0d755344b9a303107f4438bce96291f7</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Insurance Claim Processing Hub">0d755344b9a303107f4438bce96291f7</sys_scope>
+        <sys_update_name>sys_ui_action_4f2212a2bd2b03107f44a2e041a349c4</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-29 04:43:32</sys_updated_on>
+        <table>x_snc_insurance_0_claim</table>
+        <ui11_compatible>true</ui11_compatible>
+        <ui16_compatible>false</ui16_compatible>
+    </sys_ui_action>
+</record_update>

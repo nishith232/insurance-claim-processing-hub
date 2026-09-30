@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="catalog_script_client">
+    <catalog_script_client action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <applies_catalog>true</applies_catalog>
+        <applies_extended>false</applies_extended>
+        <applies_req_item>false</applies_req_item>
+        <applies_sc_task>false</applies_sc_task>
+        <applies_target_record>false</applies_target_record>
+        <applies_to>item</applies_to>
+        <cat_item display_value="Submit a Claim">2515f8e0646303107f447239048e4ea3</cat_item>
+        <cat_variable>IO:1a89f82c646303107f447239048e4e7a</cat_variable>
+        <condition/>
+        <description/>
+        <field/>
+        <global>true</global>
+        <isolate_script>true</isolate_script>
+        <messages/>
+        <name>Auto-fill policy details</name>
+        <order/>
+        <published_ref/>
+        <script><![CDATA[function onChange(control, oldValue, newValue, isLoading) {
+    if (isLoading) {
+        return;
+    }
+
+    var policyValue = (newValue || '').trim();
+
+    g_form.hideFieldMsg('policy_number_text', true);
+
+    if (!policyValue) {
+        g_form.clearValue('policyholder_name');
+        g_form.clearValue('coverage_limit');
+        g_form.clearValue('policy_status');
+        return;
+    }
+
+    var ga = new GlideAjax('x_snc_insurance_0.IRISPolicyLookup');
+
+    ga.addParam('sysparm_name', 'getPolicyDetails');
+    ga.addParam('sysparm_policy_sys_id', policyValue);
+
+    ga.getXMLAnswer(function(answer) {
+
+        // Ignore stale responses
+        if ((g_form.getValue('policy_number_text') || '').trim() !== policyValue) {
+            return;
+        }
+
+        if (!answer) {
+            g_form.showFieldMsg(
+                'policy_number_text',
+                'No response from policy lookup. Please try again.',
+                'error'
+            );
+            return;
+        }
+
+        try {
+            var result = JSON.parse(answer);
+
+            if (result.found === true) {
+                g_form.setValue(
+                    'policyholder_name',
+                    result.policyholder_name || ''
+                );
+
+                g_form.setValue(
+                    'coverage_limit',
+                    result.coverage_limit || ''
+                );
+
+                g_form.setValue(
+                    'policy_status',
+                    result.policy_status || ''
+                );
+
+                g_form.hideFieldMsg('policy_number_text', true);
+
+            } else {
+                g_form.clearValue('policyholder_name');
+                g_form.clearValue('coverage_limit');
+                g_form.clearValue('policy_status');
+
+                g_form.showFieldMsg(
+                    'policy_number_text',
+                    'This policy number was not found for your account. Please check it.',
+                    'error'
+                );
+            }
+
+        } catch (e) {
+            g_form.showFieldMsg(
+                'policy_number_text',
+                'Error reading policy details. Please try again.',
+                'error'
+            );
+        }
+    });
+}]]></script>
+        <sys_class_name>catalog_script_client</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-22 16:44:11</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>1bf44b60642743107f447239048e4e92</sys_id>
+        <sys_mod_count>6</sys_mod_count>
+        <sys_name>Auto-fill policy details</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="Insurance Claim Processing Hub" source="x_snc_insurance_0">0d755344b9a303107f4438bce96291f7</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Insurance Claim Processing Hub">0d755344b9a303107f4438bce96291f7</sys_scope>
+        <sys_update_name>catalog_script_client_1bf44b60642743107f447239048e4e92</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-28 06:17:13</sys_updated_on>
+        <table/>
+        <type>onChange</type>
+        <ui_type>10</ui_type>
+        <va_supported>true</va_supported>
+        <variable_set/>
+        <view/>
+    </catalog_script_client>
+</record_update>

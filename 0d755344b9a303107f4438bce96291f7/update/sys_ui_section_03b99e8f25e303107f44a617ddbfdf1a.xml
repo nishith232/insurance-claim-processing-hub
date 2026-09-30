@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_ui_section caption="Documents and Consistency" section_id="03b99e8f25e303107f44a617ddbfdf1a" sys_domain="global" table="x_snc_insurance_0_claim" version="3" view="">
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>documents_complete</element>
+            <position>0</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-09-30 07:45:34</sys_created_on>
+            <sys_id>c0c992cf25e303107f44a617ddbfdf06</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Documents and Consistency" display_value="Documents and Consistency" name="x_snc_insurance_0_claim" sys_domain="global" view="Default view">03b99e8f25e303107f44a617ddbfdf1a</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-09-30 07:45:34</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>documents_consistent</element>
+            <position>1</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-09-30 07:45:34</sys_created_on>
+            <sys_id>88c992cf25e303107f44a617ddbfdf06</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Documents and Consistency" display_value="Documents and Consistency" name="x_snc_insurance_0_claim" sys_domain="global" view="Default view">03b99e8f25e303107f44a617ddbfdf1a</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-09-30 07:45:34</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>missing_documents</element>
+            <position>2</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-09-30 07:45:34</sys_created_on>
+            <sys_id>40c992cf25e303107f44a617ddbfdf07</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Documents and Consistency" display_value="Documents and Consistency" name="x_snc_insurance_0_claim" sys_domain="global" view="Default view">03b99e8f25e303107f44a617ddbfdf1a</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-09-30 07:45:34</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>consistency_issues</element>
+            <position>3</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-09-30 07:45:34</sys_created_on>
+            <sys_id>08c992cf25e303107f44a617ddbfdf07</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Documents and Consistency" display_value="Documents and Consistency" name="x_snc_insurance_0_claim" sys_domain="global" view="Default view">03b99e8f25e303107f44a617ddbfdf1a</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-09-30 07:45:34</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>12M.x_snc_insurance_0_claim.x_snc_insurance_0_document.claim_id</element>
+            <position>4</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-09-30 07:45:34</sys_created_on>
+            <sys_id>ccc992cf25e303107f44a617ddbfdf07</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Documents and Consistency" display_value="Documents and Consistency" name="x_snc_insurance_0_claim" sys_domain="global" view="Default view">03b99e8f25e303107f44a617ddbfdf1a</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-09-30 07:45:34</sys_updated_on>
+            <sys_user/>
+            <type>list</type>
+        </sys_ui_element>
+        <sys_ui_section action="INSERT_OR_UPDATE">
+            <caption>Documents and Consistency</caption>
+            <header>false</header>
+            <name>x_snc_insurance_0_claim</name>
+            <roles/>
+            <sys_class_name>sys_ui_section</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-09-30 07:45:31</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>03b99e8f25e303107f44a617ddbfdf1a</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>x_snc_insurance_0_claim</sys_name>
+            <sys_overrides/>
+            <sys_package display_value="Insurance Claim Processing Hub" source="x_snc_insurance_0">0d755344b9a303107f4438bce96291f7</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="Insurance Claim Processing Hub">0d755344b9a303107f4438bce96291f7</sys_scope>
+            <sys_update_name>sys_ui_section_03b99e8f25e303107f44a617ddbfdf1a</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-09-30 07:45:31</sys_updated_on>
+            <sys_user/>
+            <title>false</title>
+            <view display_value="Default view" name="NULL">Default view</view>
+            <view_name/>
+        </sys_ui_section>
+    </sys_ui_section>
+</record_update>

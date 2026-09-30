@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_index">
+    <sys_index action="INSERT_OR_UPDATE">
+        <access_method>btree</access_method>
+        <col_name_string>policy_number</col_name_string>
+        <index_col_name element="policy_number" name="x_snc_insurance_0_policy">782e0e64646f03107f447239048e4ec7</index_col_name>
+        <logical_table_name>x_snc_insurance_0_policy</logical_table_name>
+        <sys_class_name>sys_index</sys_class_name>
+        <sys_created_by>system</sys_created_by>
+        <sys_created_on>2026-09-22 12:34:38</sys_created_on>
+        <sys_id>1c3f8ee4646f03107f447239048e4e95</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>x_snc_insurance_0_policy</sys_name>
+        <sys_package display_value="Insurance Claim Processing Hub" source="x_snc_insurance_0">0d755344b9a303107f4438bce96291f7</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Insurance Claim Processing Hub">0d755344b9a303107f4438bce96291f7</sys_scope>
+        <sys_update_name>sys_index_x_snc_insurance_0_policy_policy_number</sys_update_name>
+        <sys_updated_by>system</sys_updated_by>
+        <sys_updated_on>2026-09-22 12:34:38</sys_updated_on>
+        <table display_value="Policy" name="x_snc_insurance_0_policy">2a5c42a0646f03107f447239048e4eab</table>
+        <unique_index>true</unique_index>
+    </sys_index>
+</record_update>

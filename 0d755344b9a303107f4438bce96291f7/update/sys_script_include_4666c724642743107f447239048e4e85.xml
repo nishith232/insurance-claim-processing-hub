@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_snc_insurance_0.IRISPolicyLookup</api_name>
+        <caller_access/>
+        <client_callable>true</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>IRISPolicyLookup</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[var IRISPolicyLookup = Class.create();
+IRISPolicyLookup.prototype = Object.extendsObject(
+    global.AbstractAjaxProcessor, {
+
+        getPolicyDetails: function() {
+            var policyValue = this.getParameter(
+                'sysparm_policy_sys_id'
+            );
+
+            // Fallback for callers still sending the old parameter
+            if (!policyValue) {
+                policyValue = this.getParameter(
+                    'sysparm_policy_number'
+                );
+            }
+
+            var result = {
+                found: false
+            };
+
+            if (!policyValue) {
+                return JSON.stringify(result);
+            }
+
+            var policy = new GlideRecord(
+                'x_snc_insurance_0_policy'
+            );
+
+            // First, try matching the value as a record sys_id
+            if (!policy.get(policyValue)) {
+                // If that fails, try matching the policy number
+                policy = new GlideRecord(
+                    'x_snc_insurance_0_policy'
+                );
+                policy.addQuery('policy_number', policyValue);
+                policy.setLimit(1);
+                policy.query();
+
+                if (!policy.next()) {
+                    return JSON.stringify(result);
+                }
+            }
+
+            // Only staff, or the policy's own owner, may see the details
+            var isStaff = gs.hasRole('admin') || gs.hasRole('x_snc_insurance_0.policy_user');
+            if (!isStaff && policy.getValue('policy_owner') != gs.getUserID()) {
+                return JSON.stringify(result);
+            }
+
+            result.found = true;
+            result.policyholder_name =
+                policy.getValue('policyholder_name');
+            result.coverage_limit =
+                policy.getValue('coverage_limit');
+            result.policy_status =
+                policy.getValue('policy_status');
+
+            return JSON.stringify(result);
+        },
+
+        type: 'IRISPolicyLookup'
+    });]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-22 16:40:41</sys_created_on>
+        <sys_id>4666c724642743107f447239048e4e85</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>IRISPolicyLookup</sys_name>
+        <sys_package display_value="Insurance Claim Processing Hub" source="x_snc_insurance_0">0d755344b9a303107f4438bce96291f7</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="Insurance Claim Processing Hub">0d755344b9a303107f4438bce96291f7</sys_scope>
+        <sys_update_name>sys_script_include_4666c724642743107f447239048e4e85</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-28 06:20:01</sys_updated_on>
+    </sys_script_include>
+</record_update>

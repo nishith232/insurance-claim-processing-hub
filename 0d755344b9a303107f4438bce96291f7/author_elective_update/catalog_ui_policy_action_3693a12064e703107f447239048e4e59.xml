@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="catalog_ui_policy_action">
+    <catalog_ui_policy_action action="DELETE">
+        <catalog_item display_value="Submit a Claim">2515f8e0646303107f447239048e4ea3</catalog_item>
+        <catalog_variable>IO:80988da864e303107f447239048e4ed0</catalog_variable>
+        <cleared>false</cleared>
+        <disabled>ignore</disabled>
+        <field/>
+        <field_message/>
+        <field_message_type>none</field_message_type>
+        <mandatory>true</mandatory>
+        <order>100</order>
+        <sys_class_name>catalog_ui_policy_action</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-22 09:24:33</sys_created_on>
+        <sys_id>3693a12064e703107f447239048e4e59</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>doc_claim_form</sys_name>
+        <sys_package display_value="Insurance Claim Processing Hub" source="x_snc_insurance_0">0d755344b9a303107f4438bce96291f7</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Insurance Claim Processing Hub">0d755344b9a303107f4438bce96291f7</sys_scope>
+        <sys_update_name>catalog_ui_policy_action_3693a12064e703107f447239048e4e59</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-22 09:24:33</sys_updated_on>
+        <table/>
+        <ui_policy display_value="Show Health document uploads">0bb2a5ac64a703107f447239048e4e83</ui_policy>
+        <value/>
+        <value_action>ignore</value_action>
+        <variable>doc_claim_form</variable>
+        <variable_set/>
+        <visible>true</visible>
+    </catalog_ui_policy_action>
+    <sys_translated_text action="DELETE" query="documentkey=3693a12064e703107f447239048e4e59"/>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="Insurance Claim Processing Hub">0d755344b9a303107f4438bce96291f7</application>
+        <file_path/>
+        <instance_id>8ad1cdc7c38fcf94a03197af05013156</instance_id>
+        <instance_name>ltm-hck-2876-0048</instance_name>
+        <name>catalog_ui_policy_action_3693a12064e703107f447239048e4e59</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="catalog_ui_policy_action"><catalog_ui_policy_action action="INSERT_OR_UPDATE"><catalog_item display_value="Submit a Claim">2515f8e0646303107f447239048e4ea3</catalog_item><catalog_variable>IO:80988da864e303107f447239048e4ed0</catalog_variable><cleared>false</cleared><disabled>ignore</disabled><field/><field_message/><field_message_type>none</field_message_type><mandatory>true</mandatory><order>100</order><sys_class_name>catalog_ui_policy_action</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2026-09-22 09:24:33</sys_created_on><sys_id>3693a12064e703107f447239048e4e59</sys_id><sys_mod_count>0</sys_mod_count><sys_name>doc_claim_form</sys_name><sys_package display_value="Insurance Claim Processing Hub" source="x_snc_insurance_0">0d755344b9a303107f4438bce96291f7</sys_package><sys_policy/><sys_scope display_value="Insurance Claim Processing Hub">0d755344b9a303107f4438bce96291f7</sys_scope><sys_update_name>catalog_ui_policy_action_3693a12064e703107f447239048e4e59</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2026-09-22 09:24:33</sys_updated_on><table/><ui_policy display_value="Show Health document uploads">0bb2a5ac64a703107f447239048e4e83</ui_policy><value/><value_action>ignore</value_action><variable>doc_claim_form</variable><variable_set/><visible>true</visible></catalog_ui_policy_action><sys_translated_text action="delete_multiple" query="documentkey=3693a12064e703107f447239048e4e59"/></record_update>]]></payload>
+        <payload_hash>1021552849</payload_hash>
+        <record_name>doc_claim_form</record_name>
+        <reverted_from/>
+        <source>c9755344b9a303107f4438bce96291fa</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-22 09:24:34</sys_created_on>
+        <sys_id>84b3252064e703107f447239048e4ee9</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>1a0c86e68db0000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-22 09:24:34</sys_updated_on>
+        <type>Catalog UI Policy Action</type>
+        <update_guid>08b32520e8e70310d83dd9f9599cefe8</update_guid>
+        <update_guid_history>08b32520e8e70310d83dd9f9599cefe8:1021552849</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="doc_claim_form">3e7ca5e8642b03107f447239048e4e66</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-22 10:02:59</sys_created_on>
+        <sys_db_object display_value="" name="catalog_ui_policy_action">catalog_ui_policy_action</sys_db_object>
+        <sys_id>4ad5787ab6c24df8ab49a0376756a4c4</sys_id>
+        <sys_metadata>3693a12064e703107f447239048e4e59</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>doc_claim_form</sys_name>
+        <sys_package display_value="Insurance Claim Processing Hub" source="x_snc_insurance_0">0d755344b9a303107f4438bce96291f7</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="Insurance Claim Processing Hub">0d755344b9a303107f4438bce96291f7</sys_scope>
+        <sys_scope_delete display_value="">05de2a3fa36e4a2b80f8ea5b119d12a9</sys_scope_delete>
+        <sys_update_name>catalog_ui_policy_action_3693a12064e703107f447239048e4e59</sys_update_name>
+        <sys_update_version display_value="catalog_ui_policy_action_3693a12064e703107f447239048e4e59">84b3252064e703107f447239048e4ee9</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-22 10:02:59</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_agent_access_role_mapping">
+    <sys_agent_access_role_mapping action="INSERT_OR_UPDATE">
+        <agent_access_config display_value="Claim Adjuster Summary">4cb57f89906b03107f44b7be9ec8856c</agent_access_config>
+        <role display_value="admin" name="admin">2831a114c611228501d4ea6c309d626d</role>
+        <sys_class_name>sys_agent_access_role_mapping</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-24 09:19:25</sys_created_on>
+        <sys_id>10b57f89906b03107f44b7be9ec8858e</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Claim Adjuster Summary.admin</sys_name>
+        <sys_package display_value="Insurance Claim Processing Hub" source="x_snc_insurance_0">0d755344b9a303107f4438bce96291f7</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Insurance Claim Processing Hub">0d755344b9a303107f4438bce96291f7</sys_scope>
+        <sys_update_name>sys_agent_access_role_mapping_10b57f89906b03107f44b7be9ec8858e</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-24 09:19:25</sys_updated_on>
+    </sys_agent_access_role_mapping>
+</record_update>

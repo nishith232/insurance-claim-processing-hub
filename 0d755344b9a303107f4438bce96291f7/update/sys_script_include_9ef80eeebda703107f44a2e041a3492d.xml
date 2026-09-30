@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_snc_insurance_0.IRISRequestInfo</api_name>
+        <caller_access/>
+        <client_callable>true</client_callable>
+        <description>Sends the adjuster's message to the customer and sets Missing Info</description>
+        <mobile_callable>false</mobile_callable>
+        <name>IRISRequestInfo</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[var IRISRequestInfo = Class.create();
+IRISRequestInfo.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
+
+    send: function() {
+        var claimId = this.getParameter('sysparm_claim');
+        var msg = (this.getParameter('sysparm_message') || '').toString().trim();
+
+        if (!msg) return 'No message typed';
+        if (msg.length > 1000) return 'Message too long (maximum 1000 characters)';
+
+        var claim = new GlideRecord('x_snc_insurance_0_claim');
+        if (!claim.get(claimId)) return 'Claim not found';
+
+        if (claim.getValue('assigned_adjuster') != gs.getUserID()) {
+            return 'Only the assigned adjuster can do this';
+        }
+
+        var cs = new GlideRecord('sn_customerservice_case');
+        if (!claim.getValue('customer_case') || !cs.get(claim.getValue('customer_case'))) {
+            return 'This claim has no linked case';
+        }
+
+        cs.comments = msg;
+        cs.update();
+
+        claim.setValue('claim_status', 'missing_info');
+        claim.update();
+
+        return 'ok';
+    },
+
+    reject: function() {
+        var claimId = this.getParameter('sysparm_claim');
+        var reason = (this.getParameter('sysparm_message') || '').toString().trim();
+
+        if (!reason) return 'No reason typed';
+        if (reason.length > 1000) return 'Reason too long (maximum 1000 characters)';
+
+        var claim = new GlideRecord('x_snc_insurance_0_claim');
+        if (!claim.get(claimId)) return 'Claim not found';
+
+        if (claim.getValue('assigned_adjuster') != gs.getUserID()) {
+            return 'Only the assigned adjuster can do this';
+        }
+
+        claim.setValue('claim_status', 'rejected');
+
+        // --- Manager sign-off check: High fraud level only for rejections ---
+        var needsSignoff = (claim.getValue('fraud_risk_level') == 'High');
+
+        // New sign-off round: clear the previous manager's text
+        claim.setValue('manager_reason', '');
+        claim.setValue('manager_notes', '');
+        claim.setValue('manager_signoff_by', '');
+
+        claim.setValue('manager_signoff_status', needsSignoff ? 'pending' : 'not_required');
+        claim.update();
+
+        var cs = new GlideRecord('sn_customerservice_case');
+        if (claim.getValue('customer_case') && cs.get(claim.getValue('customer_case'))) {
+            // Internal only: customers never see work notes
+            var line = 'Adjuster ' + gs.getUserDisplayName() +
+                ' recommends REJECTION of this claim. Reason: ' + reason;
+            if (needsSignoff) line += ' [Manager sign-off required: Fraud Risk Level is High]';
+            cs.work_notes = line;
+            cs.update();
+        }
+
+        return 'ok';
+    },
+
+    approve: function() {
+        var claimId = this.getParameter('sysparm_claim');
+        var amountStr = (this.getParameter('sysparm_amount') || '').toString().trim();
+        var note = (this.getParameter('sysparm_message') || '').toString().trim();
+
+        var amount = parseFloat(amountStr);
+        if (isNaN(amount) || amount <= 0) return 'Please enter a valid positive amount';
+        if (note.length > 1000) return 'Note too long (maximum 1000 characters)';
+
+        var claim = new GlideRecord('x_snc_insurance_0_claim');
+        if (!claim.get(claimId)) return 'Claim not found';
+
+        if (claim.getValue('assigned_adjuster') != gs.getUserID()) {
+            return 'Only the assigned adjuster can do this';
+        }
+
+        claim.setValue('approved_amount', amount);
+        claim.setValue('claim_status', 'approval');
+
+        // --- Manager sign-off check ---
+        var needsSignoff = false;
+        var signoffReason = '';
+
+        if (claim.getValue('fraud_risk_level') == 'High') {
+            needsSignoff = true;
+            signoffReason = 'Fraud Risk Level is High';
+        } else {
+            var rangeText = claim.getValue('settlement_recommendation') || '';
+            var match = rangeText.match(/(\d[\d,]*)\s*-\s*Rs\.?\s*(\d[\d,]*)/i);
+            if (!match) {
+                match = rangeText.match(/Rs\.?\s*(\d[\d,]*)\s*-\s*Rs\.?\s*(\d[\d,]*)/i);
+            }
+            if (match) {
+                var low = parseFloat(match[1].replace(/,/g, ''));
+                var high = parseFloat(match[2].replace(/,/g, ''));
+                var lowBound = low * 0.85;   // 15% below
+                var highBound = high * 1.25; // 25% above
+                if (amount < lowBound) {
+                    needsSignoff = true;
+                    signoffReason = 'Approved amount is more than 15% below the suggested range (' + rangeText + ')';
+                } else if (amount > highBound) {
+                    needsSignoff = true;
+                    signoffReason = 'Approved amount is more than 25% above the suggested range (' + rangeText + ')';
+                }
+            } else {
+                // Could not parse a range - default to caution
+                needsSignoff = true;
+                signoffReason = 'Could not verify against a settlement range - manager review required';
+            }
+        }
+
+        // New sign-off round: clear the previous manager's text
+        claim.setValue('manager_reason', '');
+        claim.setValue('manager_notes', '');
+        claim.setValue('manager_signoff_by', '');
+
+        claim.setValue('manager_signoff_status', needsSignoff ? 'pending' : 'not_required');
+        claim.update();
+
+        var cs = new GlideRecord('sn_customerservice_case');
+        if (claim.getValue('customer_case') && cs.get(claim.getValue('customer_case'))) {
+            var line = 'Adjuster ' + gs.getUserDisplayName() +
+                ' recommends APPROVAL of this claim at Rs. ' + amount + '.';
+            if (note) line += ' Note: ' + note;
+            if (needsSignoff) line += ' [Manager sign-off required: ' + signoffReason + ']';
+            cs.work_notes = line;
+            cs.update();
+        }
+
+        return 'ok';
+    },
+
+    managerApprove: function() {
+        var claimId = this.getParameter('sysparm_claim');
+        var note = (this.getParameter('sysparm_message') || '').toString().trim();
+
+        if (!gs.hasRole('sn_customerservice_manager')) {
+            return 'Only a manager can do this';
+        }
+
+        var claim = new GlideRecord('x_snc_insurance_0_claim');
+        if (!claim.get(claimId)) return 'Claim not found';
+
+        if (claim.getValue('manager_signoff_status') != 'pending') {
+            return 'This claim is not waiting on sign-off';
+        }
+
+        claim.setValue('manager_signoff_status', 'approved');
+        claim.setValue('manager_signoff_by', gs.getUserID());
+        if (note) claim.setValue('manager_notes', note);
+        claim.update();
+
+        var cs = new GlideRecord('sn_customerservice_case');
+        if (claim.getValue('customer_case') && cs.get(claim.getValue('customer_case'))) {
+            var line = 'Manager ' + gs.getUserDisplayName() + ' approved this claim for finalization.';
+            if (note) line += ' Note: ' + note;
+            cs.work_notes = line;
+            cs.update();
+        }
+
+        return 'ok';
+    },
+
+    managerDecline: function() {
+        var claimId = this.getParameter('sysparm_claim');
+        var reason = (this.getParameter('sysparm_message') || '').toString().trim();
+
+        if (!reason) return 'No reason typed';
+        if (!gs.hasRole('sn_customerservice_manager')) {
+            return 'Only a manager can do this';
+        }
+
+        var claim = new GlideRecord('x_snc_insurance_0_claim');
+        if (!claim.get(claimId)) return 'Claim not found';
+
+        if (claim.getValue('manager_signoff_status') != 'pending') {
+            return 'This claim is not waiting on sign-off';
+        }
+
+        claim.setValue('manager_signoff_status', 'declined');
+        claim.setValue('manager_signoff_by', gs.getUserID());
+        claim.setValue('manager_notes', reason);
+        claim.update();
+
+        var cs = new GlideRecord('sn_customerservice_case');
+        if (claim.getValue('customer_case') && cs.get(claim.getValue('customer_case'))) {
+            cs.work_notes = 'Manager ' + gs.getUserDisplayName() +
+                ' declined to approve this claim. Reason: ' + reason +
+                '. Adjuster should revise the recommendation.';
+            cs.update();
+        }
+
+        return 'ok';
+    },
+
+    finalize: function() {
+        var claimId = this.getParameter('sysparm_claim');
+        var msg = (this.getParameter('sysparm_message') || '').toString().trim();
+
+        if (!msg) return 'No message typed';
+        if (msg.length > 2000) return 'Message too long (maximum 2000 characters)';
+
+        var claim = new GlideRecord('x_snc_insurance_0_claim');
+        if (!claim.get(claimId)) return 'Claim not found';
+
+        if (claim.getValue('assigned_adjuster') != gs.getUserID()) {
+            return 'Only the assigned adjuster can do this';
+        }
+
+        var status = claim.getValue('claim_status');
+        if (status != 'approval' && status != 'rejected') {
+            return 'This claim is not ready to be finalized';
+        }
+
+        if (claim.getValue('manager_signoff_status') == 'pending') {
+            return 'This claim is waiting on manager sign-off and cannot be finalized yet';
+        }
+
+        var cs = new GlideRecord('sn_customerservice_case');
+        if (!claim.getValue('customer_case') || !cs.get(claim.getValue('customer_case'))) {
+            return 'This claim has no linked case';
+        }
+
+        // Customer-visible: the actual outcome, in the adjuster's own words
+        cs.comments = msg;
+        cs.work_notes = 'Adjuster ' + gs.getUserDisplayName() + ' finalized and closed this claim.';
+        cs.setValue('state', '3'); // Closed
+        cs.update();
+
+        claim.setValue('claim_status', 'closed');
+        claim.update();
+
+        return 'ok';
+    },
+
+    type: 'IRISRequestInfo'
+});]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-28 17:17:41</sys_created_on>
+        <sys_id>9ef80eeebda703107f44a2e041a3492d</sys_id>
+        <sys_mod_count>8</sys_mod_count>
+        <sys_name>IRISRequestInfo</sys_name>
+        <sys_package display_value="Insurance Claim Processing Hub" source="x_snc_insurance_0">0d755344b9a303107f4438bce96291f7</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Insurance Claim Processing Hub">0d755344b9a303107f4438bce96291f7</sys_scope>
+        <sys_update_name>sys_script_include_9ef80eeebda703107f44a2e041a3492d</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-30 07:58:14</sys_updated_on>
+    </sys_script_include>
+</record_update>

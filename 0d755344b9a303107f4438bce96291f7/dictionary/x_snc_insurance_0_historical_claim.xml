@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element attributes="enforce_dot_walk_cross_scope_access=true" db_object_id="74de8a212caf03107f44ac11ae0565fc" label="Historical Claim" max_length="40" name="x_snc_insurance_0_historical_claim" type="collection">
+        <element label="Amount Settled" max_length="40" name="amount_settled" type="currency"/>
+        <element label="Claim Type" max_length="40" name="claim_type" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="motor" sequence="0" value="motor"/>
+                <element inactive_on_update="false" label="health" sequence="1" value="health"/>
+                <element inactive_on_update="false" label="property" sequence="2" value="property"/>
+                <element inactive_on_update="false" label="travel" sequence="3" value="travel"/>
+            </choice>
+        </element>
+        <element label="Amount Claimed" max_length="40" name="amount_claimed" type="currency"/>
+        <element label="Settled Date" max_length="40" name="settled_date" type="glide_date"/>
+        <element label="Claim Reference" max_length="40" name="claim_reference" type="string"/>
+    </element>
+</database>
